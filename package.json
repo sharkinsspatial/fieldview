@@ -1,0 +1,43 @@
+{
+  "name": "fieldview",
+  "version": "0.0.1",
+  "description": "Precision agriculture imagery viewer",
+  "main": "index.html",
+  "scripts": {
+    "test": "BABEL_JEST_STAGE=0 jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharkinsspatial/fieldview.git"
+  },
+  "author": "Sean Harkins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sharkinsspatial/fieldview/issues"
+  },
+  "homepage": "https://github.com/sharkinsspatial/fieldview#readme",
+  "dependencies": {
+    "alt": "^0.17.3",
+    "alt-container": "^1.0.0",
+    "axios": "^0.6.0",
+    "babel-polyfill": "^6.0.16",
+    "classnames": "^2.1.5",
+    "mapbox-gl": "^0.12.1",
+    "moment": "^2.10.6",
+    "react": "^0.14.2",
+    "react-bootstrap": "^0.27.3",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.0-rc1",
+    "react-router-bootstrap": "^0.19.2"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "grunt": "^0.4.5",
+    "grunt-aws": "^0.6.1",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-uglify": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-env": "^0.4.4",
+    "grunt-replace": "^0.11.0"
+  }
+}
