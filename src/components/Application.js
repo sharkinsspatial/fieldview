@@ -12,12 +12,13 @@ import Navbar from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Nav'
 import NavItem from 'react-bootstrap/lib/NavItem'
 import {LinkContainer} from 'react-router-bootstrap'
+import Fields from './Fields'
+import Login from './Login'
+import LoginContainer from './LoginContainer'
+import AuthenticationStore from '../stores/AuthenticationStore'
 
 
 class Application extends React.Component {
-    componentDidMount() {
-        //ReportStore.getReports()
-    }
 
     render() {
         return (
@@ -42,21 +43,17 @@ class Application extends React.Component {
 }
 
 function requireAuthorization(nextState, replaceState) {
-    //if(!AuthenticationStore.isLoggedIn()) {
-        //if (nextState.location.query.access_token) {
-            //let login = {token: nextState.location.query.access_token,
-                //userId: nextState.location.query.userId}
-            //AuthenticationActions.login(login)
-        //}
-        //else {
-            //replaceState({ nextPathname: nextState.location.pathname }, '/login')
-        //}
-    //}
+    if(!AuthenticationStore.isLoggedIn()) {
+        replaceState({ nextPathname: nextState.location.pathname }, '/login')
+    }
 }
 
 ReactDOM.render((
     <Router>
         <Route path='/' component={Application}>
+            <Route path='fields' component={Fields}
+                onEnter={requireAuthorization}/>
+            <Route path='login' component={LoginContainer}/>
         </Route>
     </Router>
 ), document.getElementById('content'))
