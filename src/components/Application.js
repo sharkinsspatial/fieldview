@@ -12,7 +12,8 @@ import Navbar from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Nav'
 import NavItem from 'react-bootstrap/lib/NavItem'
 import {LinkContainer} from 'react-router-bootstrap'
-import FieldsContainer from './FieldsContainer'
+//import FieldsContainer from './FieldsContainer'
+import ImageSelector from './ImageSelector'
 import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
 
@@ -50,7 +51,7 @@ function requireAuthorization(nextState, replaceState) {
 ReactDOM.render((
     <Router>
         <Route path='/' component={Application}>
-            <Route path='fields' component={FieldsContainer}
+            <Route path='fields' component={ImageSelector}
                 onEnter={requireAuthorization}/>
             <Route path='login' component={LoginContainer}/>
         </Route>
