@@ -57,7 +57,7 @@ var Map = React.createClass({
                 "layout": {},
                 "paint": {
                     "fill-color": "#627BC1",
-                    "fill-opacity": 0.9
+                    "fill-opacity": 0.3
                 }
             })
             map.addLayer({
@@ -67,16 +67,16 @@ var Map = React.createClass({
                 "source-layer": "fields",
                 "layout": {},
                 "paint": {
-                    "line-color": "#627BC1",
+                    "line-color": "#000000",
                     "line-width": 1.5
                 }
             })
-            map.addLayer({
-                "id": "test",
-                "type": "raster",
-                "source": "test",
-                "minzoom": 12
-            }, 'field-borders')
+            //map.addLayer({
+                //"id": "test",
+                //"type": "raster",
+                //"source": "test",
+                //"minzoom": 12
+            //}, 'field-borders')
         })
     },
 
