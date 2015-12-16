@@ -6,16 +6,15 @@ import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
 import Panel from 'react-bootstrap/lib/Panel'
-import Map from './Map'
 import AltContainer from 'alt-container'
 import Navbar from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Nav'
 import NavItem from 'react-bootstrap/lib/NavItem'
 import {LinkContainer} from 'react-router-bootstrap'
-//import FieldsContainer from './FieldsContainer'
 import ImageSelector from './ImageSelector'
 import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
+import MapContianer from './MapContainer'
 
 
 class Application extends React.Component {
@@ -33,7 +32,7 @@ class Application extends React.Component {
                 </Panel>
                 </Col>
                 <Col md={8}>
-                <Map/>
+                    <MapContianer/>
                 </Col>
                 </Row>
                 </Grid>

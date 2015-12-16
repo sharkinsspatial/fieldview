@@ -3,7 +3,8 @@ import alt from '../alt'
 class ImageActions {
     constructor() {
         this.generateActions('updateImages', 'imagesFailed',
-                             'fetchingImages', 'setActiveImage')
+                             'fetchingImages', 'setActiveImage',
+                             'setActiveProduct')
     }
 }
 

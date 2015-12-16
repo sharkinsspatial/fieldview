@@ -10,8 +10,8 @@ class ImageStore {
         this.registerAsync(ImageSource)
         this.bindAction(ImageActions.updateImages, this.onUpdate)
         this.bindAction(ImageActions.fetchingImages, this.onFetching)
-        this.bindAction(ImageActions.setActiveImage, this.onSetActive)
-        //this.bindAction(ImageActions.getFields, this.onGetFields)
+        this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
+        this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
         this.bindAction(FieldActions.setActiveField, this.getImages)
         this.state = { images: [], loading: false }
     }
@@ -31,14 +31,21 @@ class ImageStore {
         this.setState({ images: response.data, loading: false })
     }
 
-    onSetActive(id) {
+    onSetActiveImage(id) {
         let active = this.map.get(id)
         if (active) {
-            this.setState({ activeImage: active})
+            this.setState({ activeImage: active, activeProduct: active.products[0] })
         }
         else {
             this.setState({ activeImage: null })
         }
+    }
+
+    onSetActiveProduct(id) {
+        let activeProduct = this.state.activeImage.products.filter(item => {
+            return id === item.id
+        })[0]
+        this.setState({ activeProduct: activeProduct })
     }
 
     getImages(id) {

@@ -44,11 +44,6 @@ var Map = React.createClass({
                 url: 'mapbox://infraredbaron.b6prazr2',
                 minzoom: '11'
             })
-            map.addSource('test', {
-                "type": "raster",
-                "url": "mapbox://infraredbaron.b2ym3l9f",
-                "tileSize": 256
-            });
             map.addLayer({
                 "id": "field-fills",
                 "type": "fill",
@@ -71,13 +66,33 @@ var Map = React.createClass({
                     "line-width": 1.5
                 }
             })
-            //map.addLayer({
-                //"id": "test",
-                //"type": "raster",
-                //"source": "test",
-                //"minzoom": 12
-            //}, 'field-borders')
         })
+    },
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.FieldStore.activeField) {
+            this.map.fitBounds(nextProps.FieldStore.activeField.bounds,
+                               {padding: 100})
+        }
+        if (nextProps.ImageStore.activeProduct) {
+            let imageryLayer = this.map.getLayer('imagery')
+            if (imageryLayer) {
+                this.map.removeLayer('imagery')
+                this.map.removeSource('imagery')
+            }
+            let activeProduct = nextProps.ImageStore.activeProduct
+            this.map.addSource('imagery', {
+                "type": "raster",
+                "url": `mapbox://${activeProduct.mapboxId}`,
+                "tileSize": 256
+            });
+            this.map.addLayer({
+                "id": "imagery",
+                "type": "raster",
+                "source": "imagery",
+                "minzoom": 12
+            }, 'field-borders')
+        }
     },
 
     componentWillUnmount: function() {
