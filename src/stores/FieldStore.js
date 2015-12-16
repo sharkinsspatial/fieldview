@@ -13,7 +13,8 @@ class FieldStore {
         this.bindAction(FieldActions.setActiveField, this.onSetActiveField)
         this.bindAction(FieldActions.getFields, this.onGetFields)
         this.bindAction(FieldActions.setActiveFarm, this.onSetActiveFarm)
-        this.state = { fields: [], farms: [], farmFields: [], loading: false }
+        this.state = { fields: [], farms: [], farmFields: [], loading: false,
+            activeField: null}
     }
 
     onFetchingFields() {

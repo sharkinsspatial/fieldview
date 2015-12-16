@@ -50,8 +50,9 @@ class ImageStore {
 
     getImages(id) {
         //if (!this.getInstance().isLoading()) {
-        this.setState({ fieldId: id})
-            this.getInstance().fetchImages()
+        this.setState({ fieldId: id, images: [], activeImage: null,
+                      activeProduct: null})
+        this.getInstance().fetchImages()
         //}
     }
 }

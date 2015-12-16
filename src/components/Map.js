@@ -69,29 +69,42 @@ var Map = React.createClass({
         })
     },
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.FieldStore.activeField) {
-            this.map.fitBounds(nextProps.FieldStore.activeField.bounds,
-                               {padding: 100})
+    removeImagery() {
+        let imageryLayer = this.map.getLayer('imagery')
+        if (imageryLayer) {
+            this.map.removeLayer('imagery')
+            this.map.removeSource('imagery')
         }
-        if (nextProps.ImageStore.activeProduct) {
-            let imageryLayer = this.map.getLayer('imagery')
-            if (imageryLayer) {
-                this.map.removeLayer('imagery')
-                this.map.removeSource('imagery')
+    },
+
+    componentWillReceiveProps(nextProps) {
+        let field = this.props.FieldStore.activeField
+        let fieldId = field ? field.id : null
+        let nextField = nextProps.FieldStore.activeField
+        let nextFieldId = nextField ? nextField.id : null
+        let product = this.props.ImageStore.activeProduct
+        let productId = product ? product.id : null
+        let nextProduct = nextProps.ImageStore.activeProduct
+        let nextProductId = nextProduct ? nextProduct.id : null
+        if (fieldId !== nextFieldId) {
+            this.removeImagery()
+            this.map.fitBounds(nextField.bounds, {padding: 100})
+        }
+        if (productId !== nextProductId) {
+            this.removeImagery()
+            if (nextProduct) {
+                this.map.addSource('imagery', {
+                    "type": "raster",
+                    "url": `mapbox://${nextProduct.mapboxId}`,
+                        "tileSize": 256
+                });
+                this.map.addLayer({
+                    "id": "imagery",
+                    "type": "raster",
+                    "source": "imagery",
+                    "minzoom": 12
+                }, 'field-borders')
             }
-            let activeProduct = nextProps.ImageStore.activeProduct
-            this.map.addSource('imagery', {
-                "type": "raster",
-                "url": `mapbox://${activeProduct.mapboxId}`,
-                "tileSize": 256
-            });
-            this.map.addLayer({
-                "id": "imagery",
-                "type": "raster",
-                "source": "imagery",
-                "minzoom": 12
-            }, 'field-borders')
         }
     },
 
