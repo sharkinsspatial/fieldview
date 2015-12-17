@@ -1,8 +1,8 @@
 import React from 'react'
-//import Input from 'react-bootstrap/lib/Input'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import moment from 'moment'
+import Loading from './Loading'
 
 var Images = React.createClass({
     handleImageChange(item) {
@@ -44,6 +44,8 @@ var Images = React.createClass({
                 <ListGroup>
                     {productItems}
                 </ListGroup>
+                <Loading loading={this.props.loading}
+                    message={'Loading your images'}/>
             </div>
         )
     }

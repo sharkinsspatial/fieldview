@@ -9,16 +9,11 @@ class FieldStore {
         this.fieldMap = new Map()
         this.registerAsync(FieldSource)
         this.bindAction(FieldActions.updateFields, this.onUpdate)
-        this.bindAction(FieldActions.fetchingFields, this.onFetchingFields)
         this.bindAction(FieldActions.setActiveField, this.onSetActiveField)
         this.bindAction(FieldActions.getFields, this.onGetFields)
         this.bindAction(FieldActions.setActiveFarm, this.onSetActiveFarm)
         this.state = { fields: [], farms: [], farmFields: [], loading: false,
             activeField: null}
-    }
-
-    onFetchingFields() {
-        this.setState({loading: true})
     }
 
     load(items) {
@@ -45,6 +40,7 @@ class FieldStore {
     }
 
     onGetFields() {
+        this.setState({ loading: true })
         if (!this.getInstance().isLoading()) {
             this.getInstance().fetchFields()
         }

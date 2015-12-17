@@ -9,16 +9,16 @@ class ImageStore {
         this.map = new Map()
         this.registerAsync(ImageSource)
         this.bindAction(ImageActions.updateImages, this.onUpdate)
-        this.bindAction(ImageActions.fetchingImages, this.onFetching)
+        //this.bindAction(ImageActions.fetchingImages, this.onFetching)
         this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
         this.bindAction(FieldActions.setActiveField, this.getImages)
         this.state = { images: [], loading: false }
     }
 
-    onFetching() {
-        this.setState({loading: true})
-    }
+    //onFetching() {
+        //this.setState({loading: true})
+    //}
 
     load(items) {
         items.forEach((item) => {
@@ -51,7 +51,7 @@ class ImageStore {
     getImages(id) {
         //if (!this.getInstance().isLoading()) {
         this.setState({ fieldId: id, images: [], activeImage: null,
-                      activeProduct: null})
+                      activeProduct: null, loading: true})
         this.getInstance().fetchImages()
         //}
     }
