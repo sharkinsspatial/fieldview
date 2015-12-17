@@ -44,7 +44,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     patterns: [{ match: 'apiUrl', replacement:
-                        'http://knowsnowapi.herokuapp.com/'}],
+                        'http://fieldviewapi.herokuapp.com/'}],
                     usePrefix: false
                 },
                 files: [
@@ -68,7 +68,8 @@ module.exports = function(grunt) {
             options: {
                 accessKeyId: '<%= aws.key %>',
                 secretAccessKey: '<%= aws.secret %>',
-                bucket: 'knowsnow',
+                bucket: 'fieldviewer',
+                region: 'us-west-2',
                 access: 'public-read',
                 header: {
                     // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
@@ -90,26 +91,12 @@ module.exports = function(grunt) {
                     src: 'css/**',
                 },
                 {
-                    src: 'node_modules/leaflet/dist/*.css'
-                },
-                {
-                    src: 'node_modules/leaflet/dist/images/*.png'
-                },
-                {
-                    src: 'node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css'
-                },
-                {
-                    src: 'node_modules/drmonty-leaflet-awesome-markers/css/**'
-                },
-                {
-                    src: 'node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css'
+                    src: 'node_modules/mapbox-gl/dist/mapbox-gl.css'
                 },
                 {
                     src: 'node_modules/babel-polyfill/dist/polyfill.min.js'
-                },
-                {
-                    src: 'ParkingLots.geojson'
-                }]
+                }
+                ]
             }
         },
         uglify: {
