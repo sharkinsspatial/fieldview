@@ -41,7 +41,7 @@ var Fields = React.createClass({
                 </div>
             </Input>
             <Loading loading={this.props.loading}
-                message={' Loading your fields'}/>
+                message={'Loading your fields'}/>
             </div>
         )
     }

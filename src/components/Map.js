@@ -38,6 +38,7 @@ var Map = React.createClass({
         })
         let map = this.map
         map.addControl(new mapboxgl.Navigation())
+        this.addSelectFieldControl()
         map.on('style.load', function () {
             map.addSource('fields', {
                 type: 'vector',
@@ -53,7 +54,8 @@ var Map = React.createClass({
                 "paint": {
                     "fill-color": "#627BC1",
                     "fill-opacity": 0.3
-                }
+                },
+                "interactive": true
             })
             map.addLayer({
                 "id": "field-borders",
@@ -74,6 +76,32 @@ var Map = React.createClass({
         if (imageryLayer) {
             this.map.removeLayer('imagery')
             this.map.removeSource('imagery')
+        }
+    },
+
+    addSelectFieldControl() {
+        let container = document.querySelector('.mapboxgl-ctrl-top-left')
+        let controlGroup = document.createElement('div')
+        controlGroup.className = 'mapboxgl-ctrl-group mapboxgl-ctrl'
+        let button = document.createElement('button')
+        button.className = 'mapboxgl-ctrl-icon selectfield-ctrl'
+        button.addEventListener('click', () => {
+            this.map.once('mousedown', (event) => {
+                this.map.featuresAt(event.point, { radius: 5 },
+                    (err, features) => {
+                        if (features.length > 0) {
+                            this.selectField(features[0].properties.id)
+                        }
+                    })
+            })
+        })
+        controlGroup.appendChild(button)
+        container.appendChild(controlGroup)
+    },
+
+    selectField(id) {
+        if (this.props.FieldStore.fields) {
+            this.props.FieldActions.setActiveField(id)
         }
     },
 

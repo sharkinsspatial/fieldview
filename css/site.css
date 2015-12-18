@@ -26,3 +26,8 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.mapboxgl-ctrl-icon.selectfield-ctrl {
+    padding: 5px;
+    background-image: url('bullseye.svg');
+    background-size: 30px 30px;
+}
