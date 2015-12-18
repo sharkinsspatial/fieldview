@@ -85,8 +85,13 @@ var Map = React.createClass({
         controlGroup.className = 'mapboxgl-ctrl-group mapboxgl-ctrl'
         let button = document.createElement('button')
         button.className = 'mapboxgl-ctrl-icon selectfield-ctrl'
+
         button.addEventListener('click', () => {
+            button.classList.add('active')
+            this.map.getCanvas().style.cursor = 'pointer'
             this.map.once('mousedown', (event) => {
+                button.classList.remove('active')
+                this.map.getCanvas().style.cursor = ''
                 this.map.featuresAt(event.point, { radius: 5 },
                     (err, features) => {
                         if (features.length > 0) {
@@ -116,7 +121,9 @@ var Map = React.createClass({
         let nextProductId = nextProduct ? nextProduct.id : null
         if (fieldId !== nextFieldId) {
             this.removeImagery()
-            this.map.fitBounds(nextField.bounds, {padding: 100})
+            if (nextField) {
+                this.map.fitBounds(nextField.bounds, {padding: 100})
+            }
         }
         if (productId !== nextProductId) {
             this.removeImagery()

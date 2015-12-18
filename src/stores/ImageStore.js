@@ -2,6 +2,7 @@ import alt from '../alt'
 import ImageSource from '../sources/ImageSource'
 import FieldActions from '../actions/FieldActions'
 import ImageActions from '../actions/ImageActions'
+import FieldStore from './FieldStore'
 //import moment from 'moment'
 
 class ImageStore {
@@ -49,11 +50,17 @@ class ImageStore {
     }
 
     getImages(id) {
-        //if (!this.getInstance().isLoading()) {
-        this.setState({ fieldId: id, images: [], activeImage: null,
-                      activeProduct: null, loading: true})
-        this.getInstance().fetchImages()
-        //}
+        //Don't hit API when user clicks an unauthorized Field.
+        this.waitFor(FieldStore)
+        if (FieldStore.getState().unauthorizedField) {
+            this.setState({ fieldId: id, images: [], activeImage: null,
+                      activeProduct: null, loading: false})
+        }
+        else {
+            this.setState({ fieldId: id, images: [], activeImage: null,
+                          activeProduct: null, loading: true})
+            this.getInstance().fetchImages()
+        }
     }
 }
 

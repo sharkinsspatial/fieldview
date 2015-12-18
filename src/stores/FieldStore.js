@@ -32,10 +32,10 @@ class FieldStore {
     onSetActiveField(id) {
         let activeField = this.fieldMap.get(id)
         if (activeField) {
-            this.setState({ activeField: activeField })
+            this.setState({ activeField: activeField, unauthorizedField: false })
         }
         else {
-            this.setState({ activeField: null })
+            this.setState({ activeField: null, unauthorizedField: true })
         }
     }
 

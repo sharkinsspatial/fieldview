@@ -4,6 +4,7 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton'
 import MenuItem from 'react-bootstrap/lib/MenuItem'
 import Input from 'react-bootstrap/lib/Input'
 import Loading from './Loading'
+import Message from './Message'
 
 var Fields = React.createClass({
     componentDidMount() {
@@ -42,6 +43,8 @@ var Fields = React.createClass({
             </Input>
             <Loading loading={this.props.loading}
                 message={'Loading your fields'}/>
+            <Message show={this.props.unauthorizedField}
+                message={'You do not have any images available for this field'}/>
             </div>
         )
     }

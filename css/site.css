@@ -31,3 +31,6 @@ body {
     background-image: url('bullseye.svg');
     background-size: 30px 30px;
 }
+.mapboxgl-ctrl-icon.selectfield-ctrl.active {
+    background-color: rgba(0,0,0,0.09);
+}
