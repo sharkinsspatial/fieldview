@@ -3,7 +3,7 @@ import ImageActions from '../actions/ImageActions'
 import AuthenticationStore from '../stores/AuthenticationStore'
 const rootUrl = 'apiUrl'
 const ImageSource = {
-    fetchImages: {
+    fetchFieldImages: {
         remote(state) {
             let auth = AuthenticationStore.getState()
             let url = `${rootUrl}api/customers/` +

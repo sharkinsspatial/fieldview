@@ -13,7 +13,7 @@ class ImageStore {
         //this.bindAction(ImageActions.fetchingImages, this.onFetching)
         this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
-        this.bindAction(FieldActions.setActiveField, this.getImages)
+        this.bindAction(FieldActions.setActiveField, this.getFieldImages)
         this.state = { images: [], loading: false }
     }
 
@@ -49,7 +49,7 @@ class ImageStore {
         this.setState({ activeProduct: activeProduct })
     }
 
-    getImages(id) {
+    getFieldImages(id) {
         //Don't hit API when user clicks an unauthorized Field.
         this.waitFor(FieldStore)
         if (FieldStore.getState().unauthorizedField) {
@@ -59,7 +59,7 @@ class ImageStore {
         else {
             this.setState({ fieldId: id, images: [], activeImage: null,
                           activeProduct: null, loading: true})
-            this.getInstance().fetchImages()
+            this.getInstance().fetchFieldImages()
         }
     }
 }
