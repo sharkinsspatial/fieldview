@@ -3,6 +3,7 @@ import ImageSource from '../sources/ImageSource'
 import FieldActions from '../actions/FieldActions'
 import ImageActions from '../actions/ImageActions'
 import FieldStore from './FieldStore'
+import _ from 'lodash'
 //import moment from 'moment'
 
 class ImageStore {
@@ -14,7 +15,8 @@ class ImageStore {
         this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
         this.bindAction(FieldActions.setActiveField, this.getFieldImages)
-        this.state = { images: [], loading: false }
+        this.bindAction(ImageActions.getImages, this.getImages)
+        this.state = { images: [], loading: false, dates: [] }
     }
 
     //onFetching() {
@@ -22,14 +24,23 @@ class ImageStore {
     //}
 
     load(items) {
+        let hasField = false
+        let groupings = { farms: [], dates: [] }
         items.forEach((item) => {
             this.map.set(item.id, item)
+            hasField = item.field ? true : false
         })
+        if (hasField) {
+            groupings.farms = _(items).pluck('field').unique('farmId').value()
+            groupings.dates = _.sortBy(_.pluck(items,'collectionDate'), (value) => {return new Date(value)}).reverse()
+        }
+        return groupings
     }
 
     onUpdate(response) {
-        this.load(response.data)
-        this.setState({ images: response.data, loading: false })
+        let groupings = this.load(response.data)
+        this.setState({ images: response.data, loading: false,
+                      farms: groupings.farms, dates: groupings.dates })
     }
 
     onSetActiveImage(id) {
@@ -61,6 +72,12 @@ class ImageStore {
                           activeProduct: null, loading: true})
             this.getInstance().fetchFieldImages()
         }
+    }
+
+    getImages() {
+        this.setState({ images: [], activeImage: null,
+                      activeProduct: null, loading: true })
+        this.getInstance().fetchImages()
     }
 }
 
