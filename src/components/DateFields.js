@@ -4,10 +4,13 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import Loading from './Loading'
 
 var DateFields = React.createClass({
+    componentWillMount() {
+        if (this.props.FieldStore.fields.length == 0) {
+            this.props.FieldActions.getFields()
+        }
+    },
 
     handleFieldChange(item) {
-        //this.props.FieldActions.updateFields({ data: this.props.ImageStore
-            //.dateFields })
         this.props.FieldActions.setActiveField(item.id)
     },
 

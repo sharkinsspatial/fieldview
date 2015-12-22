@@ -8,7 +8,9 @@ import Message from './Message'
 
 var Fields = React.createClass({
     componentWillMount() {
-        this.props.getFields()
+        if (this.props.fields.length == 0) {
+            this.props.getFields()
+        }
     },
 
     componentWillUnmount() {
