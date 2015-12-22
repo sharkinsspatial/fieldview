@@ -9,7 +9,8 @@ import Products from './Products'
 var ImagesContainer = React.createClass({
     render() {
         return (
-            <AltContainer store={ImageStore} actions={ImageActions}>
+            <AltContainer stores={{ImageStore: ImageStore}}
+                actions={{ImageActions: ImageActions}}>
                 <Images/>
                 <Products/>
             </AltContainer>

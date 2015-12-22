@@ -40,7 +40,8 @@ class ImageStore {
     onUpdate(response) {
         let dates = this.load(response.data)
         this.setState({ images: response.data, loading: false,
-                            dates: dates })
+                            dates: dates, activeImage: null,
+                            activeProduct: null, activeDate: null })
     }
 
     onSetActiveImage(id) {
@@ -49,7 +50,7 @@ class ImageStore {
             this.setState({ activeImage: active, activeProduct: active.products[0] })
         }
         else {
-            this.setState({ activeImage: null })
+            this.setState({ activeImage: null, activeProduct: null })
         }
     }
 
@@ -97,7 +98,8 @@ class ImageStore {
         })
 
         let dateFields = _(dateImages).pluck('field').unique('id').value()[0]
-        this.setState({ dateFields: dateFields, activeDate: date })
+        this.setState({ dateFields: dateFields, activeDate: date,
+            activeImage: null})
     }
 }
 

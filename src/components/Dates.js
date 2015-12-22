@@ -14,6 +14,11 @@ var Dates = React.createClass({
         this.props.ImageActions.filterByDate(item)
     },
 
+    componentWillUnmount() {
+        this.props.ImageActions.updateImages({ data: [] })
+        this.props.FieldActions.updateFields({ data: [] })
+    },
+
     render() {
         let dateItems = this.props.ImageStore.dates.map(item => {
             let dateNoTime = item.split('T')[0]

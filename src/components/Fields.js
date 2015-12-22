@@ -7,9 +7,15 @@ import Loading from './Loading'
 import Message from './Message'
 
 var Fields = React.createClass({
-    componentDidMount() {
+    componentWillMount() {
         this.props.getFields()
     },
+
+    componentWillUnmount() {
+        this.props.updateFields({ data: [] })
+        this.props.clearActiveField()
+    },
+
     handleSelectFarm(event, id) {
         this.props.setActiveFarm(id)
     },

@@ -6,17 +6,17 @@ import Loading from './Loading'
 
 var Images = React.createClass({
     handleImageChange(item) {
-        this.props.setActiveImage(item.id)
+        this.props.ImageActions.setActiveImage(item.id)
     },
 
     render() {
-        let imageItems = this.props.images.map(item => {
+        let imageItems = this.props.ImageStore.images.map(item => {
             //Removes UTC Z time code from string.
             let dateNoTime = item.collectionDate.split('T')[0]
             let formatDate = moment(dateNoTime).format('MMMM Do YYYY')
             let active = ''
-            if (this.props.activeImage) {
-                active = item.id === this.props.activeImage.id ? 'active' : ''
+            if (this.props.ImageStore.activeImage) {
+                active = item.id === this.props.ImageStore.activeImage.id ? 'active' : ''
             }
             return <ListGroupItem key={item.id}
                     onClick={this.handleImageChange.bind(this, item)}
@@ -27,7 +27,7 @@ var Images = React.createClass({
             <ListGroup>
                 {imageItems}
             </ListGroup>
-            <Loading loading={this.props.loading}
+            <Loading loading={this.props.ImageStore.loading}
                 message={'Loading your images'}/>
             </div>
         )

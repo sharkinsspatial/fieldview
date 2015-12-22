@@ -17,14 +17,21 @@ import AuthenticationStore from '../stores/AuthenticationStore'
 import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
 
-
 class Application extends React.Component {
 
     render() {
         return (
             <div>
                 <Navbar fluid fixedTop toggleNavKey={0}>
-               </Navbar>
+                    <Nav right eventKey={0}>
+                    <LinkContainer to='/fields'>
+                        <NavItem eventKey={1}>Fields</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to='/dates'>
+                        <NavItem eventKey={2}>Dates</NavItem>
+                    </LinkContainer>
+                    </Nav>
+                </Navbar>
                 <Grid fluid>
                 <Row>
                 <Col className={'scroll'} md={4}>

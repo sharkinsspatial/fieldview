@@ -4,18 +4,20 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 
 var Products = React.createClass({
     handleProductChange(item) {
-        this.props.setActiveProduct(item.id)
+        this.props.ImageActions.setActiveProduct(item.id)
     },
 
     render() {
         let productItems = []
-        if (this.props.activeImage) {
-            productItems = this.props.activeImage.products.map((item, index) => {
-                let active = item.id === this.props.activeProduct.id ? 'active' : ''
-                return <ListGroupItem key={item.id}
-                onClick={this.handleProductChange.bind(this, item)}
-                active={active}>{item.productType}</ListGroupItem>
-            })
+        if (this.props.ImageStore.activeImage) {
+            productItems = this.props.ImageStore.activeImage
+                .products.map((item, index) => {
+                    let active = item.id === this.props.ImageStore.activeProduct.id
+                        ? 'active' : ''
+                    return <ListGroupItem key={item.id}
+                    onClick={this.handleProductChange.bind(this, item)}
+                    active={active}>{item.productType}</ListGroupItem>
+                })
         }
         return (
             <ListGroup>

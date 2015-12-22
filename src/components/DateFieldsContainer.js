@@ -7,6 +7,7 @@ import FieldStore from '../stores/FieldStore'
 import FieldActions from '../actions/FieldActions'
 import Dates from './Dates'
 import DateFields from './DateFields'
+import Products from './Products'
 
 var DateFieldsContainer = React.createClass({
     render() {
@@ -15,6 +16,7 @@ var DateFieldsContainer = React.createClass({
                 actions={{ImageActions: ImageActions, FieldActions: FieldActions}}>
                 <Dates/>
                 <DateFields/>
+                <Products/>
             </AltContainer>
         )
     }
