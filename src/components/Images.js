@@ -9,10 +9,6 @@ var Images = React.createClass({
         this.props.setActiveImage(item.id)
     },
 
-    handleProductChange(item) {
-        this.props.setActiveProduct(item.id)
-    },
-
     render() {
         let imageItems = this.props.images.map(item => {
             //Removes UTC Z time code from string.
@@ -26,26 +22,13 @@ var Images = React.createClass({
                     onClick={this.handleImageChange.bind(this, item)}
                     active={active}>{formatDate}</ListGroupItem>
         })
-        let productItems = []
-        if (this.props.activeImage) {
-            productItems = this.props.activeImage.products.map((item, index) => {
-                let active = item.id === this.props.activeProduct.id ? 'active' : ''
-                return <ListGroupItem key={item.id}
-                    onClick={this.handleProductChange.bind(this, item)}
-                    active={active}>{item.productType}</ListGroupItem>
-
-            })
-        }
         return (
             <div>
-                <ListGroup>
-                    {imageItems}
-                </ListGroup>
-                <ListGroup>
-                    {productItems}
-                </ListGroup>
-                <Loading loading={this.props.loading}
-                    message={'Loading your images'}/>
+            <ListGroup>
+                {imageItems}
+            </ListGroup>
+            <Loading loading={this.props.loading}
+                message={'Loading your images'}/>
             </div>
         )
     }

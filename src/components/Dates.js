@@ -6,13 +6,26 @@ import Loading from './Loading'
 
 var Dates = React.createClass({
     componentDidMount() {
-        this.props.getImages()
+        this.props.ImageActions.getImages()
     },
+
+    handleDateChange(item) {
+        this.props.FieldActions.clearActiveField()
+        this.props.ImageActions.filterByDate(item)
+    },
+
     render() {
-        let dateItems = this.props.dates.map(item => {
+        let dateItems = this.props.ImageStore.dates.map(item => {
             let dateNoTime = item.split('T')[0]
             let formatDate = moment(dateNoTime).format('MMMM Do YYYY')
-            return <ListGroupItem key={item}>{formatDate}</ListGroupItem>
+            let active = ''
+            if (this.props.ImageStore.activeDate) {
+                active = item === this.props.ImageStore.activeDate
+                    ? 'active' : ''
+            }
+            return <ListGroupItem key={item}
+                onClick={this.handleDateChange.bind(this, item)}
+                active={active}>{formatDate}</ListGroupItem>
         })
 
         return (
@@ -20,8 +33,6 @@ var Dates = React.createClass({
                 <ListGroup>
                     {dateItems}
                 </ListGroup>
-                <Loading loading={this.props.loading}
-                    message={'Loading your images'}/>
             </div>
         )
     }

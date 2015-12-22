@@ -16,7 +16,8 @@ class ImageStore {
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
         this.bindAction(FieldActions.setActiveField, this.getFieldImages)
         this.bindAction(ImageActions.getImages, this.getImages)
-        this.state = { images: [], loading: false, dates: [] }
+        this.bindAction(ImageActions.filterByDate, this.onFilterByDate)
+        this.state = { images: [], loading: false, dates: [], dateFields: []}
     }
 
     //onFetching() {
@@ -25,22 +26,21 @@ class ImageStore {
 
     load(items) {
         let hasField = false
-        let groupings = { farms: [], dates: [] }
+        let dates = []
         items.forEach((item) => {
             this.map.set(item.id, item)
             hasField = item.field ? true : false
         })
         if (hasField) {
-            groupings.farms = _(items).pluck('field').unique('farmId').value()
-            groupings.dates = _.sortBy(_.pluck(items,'collectionDate'), (value) => {return new Date(value)}).reverse()
+            dates = _.sortBy(_.pluck(items,'collectionDate'), (value) => {return new Date(value)}).reverse()
         }
-        return groupings
+        return dates
     }
 
     onUpdate(response) {
-        let groupings = this.load(response.data)
+        let dates = this.load(response.data)
         this.setState({ images: response.data, loading: false,
-                      farms: groupings.farms, dates: groupings.dates })
+                            dates: dates })
     }
 
     onSetActiveImage(id) {
@@ -63,14 +63,25 @@ class ImageStore {
     getFieldImages(id) {
         //Don't hit API when user clicks an unauthorized Field.
         this.waitFor(FieldStore)
+
         if (FieldStore.getState().unauthorizedField) {
             this.setState({ fieldId: id, images: [], activeImage: null,
                       activeProduct: null, loading: false})
         }
         else {
-            this.setState({ fieldId: id, images: [], activeImage: null,
-                          activeProduct: null, loading: true})
-            this.getInstance().fetchFieldImages()
+            if (this.state.activeDate) {
+                let dateFieldImage = this.state.images.find((image) => {
+                    let dateMatch = image.collectionDate === this.state.activeDate
+                    let fieldMatch = image.fieldId === id
+                    let match = dateMatch && fieldMatch ? true : false
+                    return match
+                })
+                this.onSetActiveImage(dateFieldImage.id)
+            } else {
+                this.setState({ fieldId: id, images: [], activeImage: null,
+                              activeProduct: null, loading: true})
+                this.getInstance().fetchFieldImages()
+            }
         }
     }
 
@@ -78,6 +89,15 @@ class ImageStore {
         this.setState({ images: [], activeImage: null,
                       activeProduct: null, loading: true })
         this.getInstance().fetchImages()
+    }
+
+    onFilterByDate(date) {
+        let dateImages = this.state.images.filter((image) => {
+            return image.collectionDate === date
+        })
+
+        let dateFields = _(dateImages).pluck('field').unique('id').value()[0]
+        this.setState({ dateFields: dateFields, activeDate: date })
     }
 }
 

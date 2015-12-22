@@ -15,7 +15,7 @@ import ImageSelector from './ImageSelector'
 import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
 import MapContianer from './MapContainer'
-import DatesContainer from './DatesContainer'
+import DateFieldsContainer from './DateFieldsContainer'
 
 
 class Application extends React.Component {
@@ -53,7 +53,7 @@ ReactDOM.render((
         <Route path='/' component={Application}>
             <Route path='fields' component={ImageSelector}
                 onEnter={requireAuthorization}/>
-            <Route path='dates' component={DatesContainer}
+            <Route path='dates' component={DateFieldsContainer}
                 onEnter={requireAuthorization}/>
             <Route path='login' component={LoginContainer}/>
         </Route>

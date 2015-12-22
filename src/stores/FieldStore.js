@@ -12,6 +12,7 @@ class FieldStore {
         this.bindAction(FieldActions.setActiveField, this.onSetActiveField)
         this.bindAction(FieldActions.getFields, this.onGetFields)
         this.bindAction(FieldActions.setActiveFarm, this.onSetActiveFarm)
+        this.bindAction(FieldActions.clearActiveField, this.onClearActiveField)
         this.state = { fields: [], farms: [], farmFields: [], loading: true,
             activeField: null}
     }
@@ -37,6 +38,10 @@ class FieldStore {
         else {
             this.setState({ activeField: null, unauthorizedField: true })
         }
+    }
+
+    onClearActiveField() {
+        this.setState({ activeField: null })
     }
 
     onGetFields() {
