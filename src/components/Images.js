@@ -9,8 +9,12 @@ var Images = React.createClass({
         this.props.ImageActions.setActiveImage(item.id)
     },
 
+    componentWillUnmount() {
+        this.props.ImageActions.clearFieldImages()
+    },
+
     render() {
-        let imageItems = this.props.ImageStore.images.map(item => {
+        let imageItems = this.props.ImageStore.fieldImages.map(item => {
             //Removes UTC Z time code from string.
             let dateNoTime = item.collectionDate.split('T')[0]
             let formatDate = moment(dateNoTime).format('MMMM Do YYYY')

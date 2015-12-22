@@ -4,52 +4,62 @@ import FieldActions from '../actions/FieldActions'
 import ImageActions from '../actions/ImageActions'
 import FieldStore from './FieldStore'
 import _ from 'lodash'
-//import moment from 'moment'
 
 class ImageStore {
     constructor() {
-        this.map = new Map()
+        this.dateImages = new Map()
+        this.fieldImages = new Map()
         this.registerAsync(ImageSource)
-        this.bindAction(ImageActions.updateImages, this.onUpdate)
-        //this.bindAction(ImageActions.fetchingImages, this.onFetching)
         this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
-        this.bindAction(FieldActions.setActiveField, this.getFieldImages)
-        this.bindAction(ImageActions.getImages, this.getImages)
-        this.bindAction(ImageActions.filterByDate, this.onFilterByDate)
-        this.state = { images: [], loading: false, dates: [], dateFields: []}
+        this.bindAction(FieldActions.setActiveField, this.onSetActiveField)
+        this.bindAction(ImageActions.setActiveDate, this.onSetActiveDate)
+        this.bindAction(ImageActions.getDateImages, this.getDateImages)
+        this.bindAction(ImageActions.updateFieldImages, this.onUpdateFieldImages)
+        this.bindAction(ImageActions.updateDateImages, this.onUpdateDateImages)
+        this.bindAction(ImageActions.clearActiveDate, this.onClearActiveDate)
+        this.bindAction(ImageActions.clearFieldImages, this.onClearFieldImages)
+        this.state = { loading: false, dateImages: [], fieldImages: [],
+            dates: [], dateFields: []}
     }
 
-    //onFetching() {
-        //this.setState({loading: true})
-    //}
-
-    load(items) {
-        let hasField = false
-        let dates = []
+    loadFieldImages(items) {
         items.forEach((item) => {
-            this.map.set(item.id, item)
-            hasField = item.field ? true : false
+            this.fieldImages.set(item.id, item)
         })
-        if (hasField) {
-            dates = _.sortBy(_.pluck(items,'collectionDate'), (value) => {return new Date(value)}).reverse()
-        }
+    }
+
+    loadDateImages(items) {
+        items.forEach((item) => {
+            this.dateImages
+            this.dateImages.set(item.id, item)
+        })
+        let dates =  _.sortBy(_.pluck(items,'collectionDate'), (value) =>
+                              {return new Date(value)}).reverse()
         return dates
     }
 
-    onUpdate(response) {
-        let dates = this.load(response.data)
-        this.setState({ images: response.data, loading: false,
-                            dates: dates, activeImage: null,
-                            activeProduct: null, activeDate: null })
+    onUpdateFieldImages(response) {
+        this.loadFieldImages(response.data)
+        this.setState({ fieldImages: response.data, loading: false,
+                      activeImage: null, activeProduct: null })
+    }
+
+    onUpdateDateImages(response) {
+        let dates = this.loadDateImages(response.data)
+        this.setState({ dateImages: response.data, loading: false,
+                      dates: dates, activeImage: null, activeDate: null,
+                      dateFields: [] })
     }
 
     onSetActiveImage(id) {
-        let active = this.map.get(id)
-        if (active) {
-            this.setState({ activeImage: active, activeProduct: active.products[0] })
+        let activeImage = this.fieldImages.get(id)
+        if (activeImage) {
+            this.setState({ activeImage: activeImage,
+                          activeProduct: activeImage.products[0] })
         }
-        else {
+        else
+        {
             this.setState({ activeImage: null, activeProduct: null })
         }
     }
@@ -61,45 +71,59 @@ class ImageStore {
         this.setState({ activeProduct: activeProduct })
     }
 
-    getFieldImages(id) {
-        //Don't hit API when user clicks an unauthorized Field.
+    onSetActiveField(id) {
+    //Don't hit API when user clicks an unauthorized Field.
         this.waitFor(FieldStore)
-
         if (FieldStore.getState().unauthorizedField) {
-            this.setState({ fieldId: id, images: [], activeImage: null,
+            this.setState({ fieldId: id, fieldImages: [], activeImage: null,
                       activeProduct: null, loading: false})
-        }
-        else {
+        } else {
             if (this.state.activeDate) {
-                let dateFieldImage = this.state.images.find((image) => {
-                    let dateMatch = image.collectionDate === this.state.activeDate
-                    let fieldMatch = image.fieldId === id
-                    let match = dateMatch && fieldMatch ? true : false
-                    return match
-                })
-                this.onSetActiveImage(dateFieldImage.id)
-            } else {
-                this.setState({ fieldId: id, images: [], activeImage: null,
+                let activeImage = this.selectDateFieldImage(id)
+                this.setState({ activeImage: activeImage,
+                    activeProduct: activeImage.products[0] })
+            }
+            else {
+                this.setState({ fieldId: id, fieldImages: [], activeImage: null,
                               activeProduct: null, loading: true})
                 this.getInstance().fetchFieldImages()
             }
         }
     }
 
-    getImages() {
-        this.setState({ images: [], activeImage: null,
-                      activeProduct: null, loading: true })
-        this.getInstance().fetchImages()
+    selectDateFieldImage(fieldId) {
+        let dateFieldImage = this.state.dateImages.find((image) => {
+            let dateMatch = image.collectionDate === this.state.activeDate
+            let fieldMatch = image.fieldId === fieldId
+            let match = dateMatch && fieldMatch ? true : false
+            return match
+        })
+        return dateFieldImage
     }
 
-    onFilterByDate(date) {
-        let dateImages = this.state.images.filter((image) => {
+    getDateImages() {
+        this.setState({ dateImages: [], activeImage: null,
+                      activeProduct: null, loading: true })
+        this.getInstance().fetchDateImages()
+    }
+
+    onSetActiveDate(date) {
+        let sameDates = this.state.dateImages.filter((image) => {
             return image.collectionDate === date
         })
 
-        let dateFields = _(dateImages).pluck('field').unique('id').value()[0]
+        let dateFields = _(sameDates).pluck('field').unique('id').value()[0]
         this.setState({ dateFields: dateFields, activeDate: date,
             activeImage: null})
+    }
+
+    onClearActiveDate() {
+        this.setState({ dateFields: [], activeDate: null, activeImage: null,
+            activeProduct: null})
+    }
+
+    onClearFieldImages() {
+        this.setState({ fieldImages: [], activeImage: null, activeProduct: null })
     }
 }
 

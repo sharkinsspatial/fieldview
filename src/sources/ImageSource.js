@@ -15,11 +15,11 @@ const ImageSource = {
             return true
         },
 
-        success: ImageActions.updateImages,
+        success: ImageActions.updateFieldImages,
         error: ImageActions.imagesFailed
     },
 
-    fetchImages: {
+    fetchDateImages: {
         remote(state) {
             let auth = AuthenticationStore.getState()
             let url = `${rootUrl}api/customers/` +
@@ -32,7 +32,7 @@ const ImageSource = {
             return true
         },
 
-        success: ImageActions.updateImages,
+        success: ImageActions.updateDateImages,
         error: ImageActions.imagesFailed
     }
 }

@@ -6,8 +6,8 @@ import Loading from './Loading'
 var DateFields = React.createClass({
 
     handleFieldChange(item) {
-        this.props.FieldActions.updateFields({ data: this.props.ImageStore
-            .dateFields })
+        //this.props.FieldActions.updateFields({ data: this.props.ImageStore
+            //.dateFields })
         this.props.FieldActions.setActiveField(item.id)
     },
 
@@ -15,7 +15,6 @@ var DateFields = React.createClass({
         let fieldItems = this.props.ImageStore.dateFields.map(item => {
             let active = ''
             if (this.props.FieldStore.activeField) {
-                console.log(this.props.FieldStore.activeField)
                 active = item.id === this.props.FieldStore.activeField.id ?
                     'active' : ''
             }

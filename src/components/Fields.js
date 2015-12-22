@@ -12,7 +12,6 @@ var Fields = React.createClass({
     },
 
     componentWillUnmount() {
-        this.props.updateFields({ data: [] })
         this.props.clearActiveField()
     },
 

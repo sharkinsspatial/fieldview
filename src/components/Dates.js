@@ -6,17 +6,16 @@ import Loading from './Loading'
 
 var Dates = React.createClass({
     componentDidMount() {
-        this.props.ImageActions.getImages()
+        this.props.ImageActions.getDateImages()
     },
 
     handleDateChange(item) {
         this.props.FieldActions.clearActiveField()
-        this.props.ImageActions.filterByDate(item)
+        this.props.ImageActions.setActiveDate(item)
     },
 
     componentWillUnmount() {
-        this.props.ImageActions.updateImages({ data: [] })
-        this.props.FieldActions.updateFields({ data: [] })
+        this.props.ImageActions.clearActiveDate()
     },
 
     render() {
