@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Classnames from 'classnames'
+import _ from 'lodash'
 
 var Map = React.createClass({
     //propTypes: {
@@ -119,6 +120,9 @@ var Map = React.createClass({
         let productId = product ? product.id : null
         let nextProduct = nextProps.ImageStore.activeProduct
         let nextProductId = nextProduct ? nextProduct.id : null
+        let dateFieldIds = this.props.ImageStore.dateFieldIds
+        let nextDateFieldIds = nextProps.ImageStore.dateFieldIds
+
         if (fieldId !== nextFieldId) {
             this.removeImagery()
             if (nextField) {
@@ -139,6 +143,17 @@ var Map = React.createClass({
                     "source": "imagery",
                     "minzoom": 12
                 }, 'field-borders')
+            }
+        }
+        if (!_.isEqual(dateFieldIds, nextDateFieldIds)) {
+            let noFilter = ['!=', 'id', 0]
+            let filter = ['all', ['in', 'id'].concat(nextDateFieldIds)]
+            if (nextDateFieldIds.length == 0) {
+                this.map.setFilter('field-borders', noFilter )
+                this.map.setFilter('field-fills', noFilter )
+            } else {
+                this.map.setFilter('field-borders', filter )
+                this.map.setFilter('field-fills', filter )
             }
         }
     },

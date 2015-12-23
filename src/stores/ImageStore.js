@@ -49,7 +49,7 @@ class ImageStore {
         let dates = this.loadDateImages(response.data)
         this.setState({ dateImages: response.data, loadingDates: false,
                       dates: dates, activeImage: null, activeDate: null,
-                      dateFields: [] })
+                      dateFields: [], dateFieldIds: [] })
     }
 
     onSetActiveImage(id) {
@@ -120,13 +120,16 @@ class ImageStore {
         })
 
         let dateFields = _(sameDates).pluck('field').unique('id').value()[0]
-        this.setState({ dateFields: dateFields, activeDate: date,
-            activeImage: null})
+        let dateFieldIds = dateFields.map((item) => {
+            return item.id
+        })
+        this.setState({ dateFields: dateFields, dateFieldIds: dateFieldIds,
+                      activeDate: date, activeImage: null})
     }
 
     onClearActiveDate() {
-        this.setState({ dateFields: [], activeDate: null, activeImage: null,
-            activeProduct: null})
+        this.setState({ dateFields: [], dateFieldIds: [], activeDate: null,
+                      activeImage: null, activeProduct: null})
     }
 
     onClearFieldImages() {
