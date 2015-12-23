@@ -1,7 +1,7 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
-import Loading from './Loading'
+import Message from './Message'
 
 var DateFields = React.createClass({
     componentWillMount() {
@@ -31,8 +31,8 @@ var DateFields = React.createClass({
                 <ListGroup>
                     {fieldItems}
                 </ListGroup>
-                <Loading loading={this.props.ImageStore.loading}
-                    message={'Loading your images'}/>
+                <Message show={this.props.ImageStore.unavailableImage}
+                    message={'There is no image available for this field on the selected date'}/>
             </div>
         )
     }

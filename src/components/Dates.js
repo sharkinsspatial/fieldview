@@ -6,7 +6,9 @@ import Loading from './Loading'
 
 var Dates = React.createClass({
     componentDidMount() {
-        this.props.ImageActions.getDateImages()
+        if (this.props.ImageStore.dateImages.length == 0) {
+            this.props.ImageActions.getDateImages()
+        }
     },
 
     handleDateChange(item) {
@@ -37,6 +39,8 @@ var Dates = React.createClass({
                 <ListGroup>
                     {dateItems}
                 </ListGroup>
+                <Loading loading={this.props.ImageStore.loadingDates}
+                    message={'Loading your images'}/>
             </div>
         )
     }

@@ -20,7 +20,7 @@ class ImageStore {
         this.bindAction(ImageActions.clearActiveDate, this.onClearActiveDate)
         this.bindAction(ImageActions.clearFieldImages, this.onClearFieldImages)
         this.state = { loading: false, dateImages: [], fieldImages: [],
-            dates: [], dateFields: []}
+            dates: [], dateFields: [], loadingDates: true}
     }
 
     loadFieldImages(items) {
@@ -47,7 +47,7 @@ class ImageStore {
 
     onUpdateDateImages(response) {
         let dates = this.loadDateImages(response.data)
-        this.setState({ dateImages: response.data, loading: false,
+        this.setState({ dateImages: response.data, loadingDates: false,
                       dates: dates, activeImage: null, activeDate: null,
                       dateFields: [] })
     }
@@ -80,8 +80,15 @@ class ImageStore {
         } else {
             if (this.state.activeDate) {
                 let activeImage = this.selectDateFieldImage(id)
-                this.setState({ activeImage: activeImage,
-                    activeProduct: activeImage.products[0] })
+                if (activeImage) {
+                    this.setState({ activeImage: activeImage,
+                        activeProduct: activeImage.products[0],
+                        unavailableImage: false
+                    })
+                } else {
+                    this.setState({ unavailableImage: true, activeImage: null,
+                        activeProduct: null})
+                }
             }
             else {
                 this.setState({ fieldId: id, fieldImages: [], activeImage: null,
@@ -103,7 +110,7 @@ class ImageStore {
 
     getDateImages() {
         this.setState({ dateImages: [], activeImage: null,
-                      activeProduct: null, loading: true })
+                      activeProduct: null })
         this.getInstance().fetchDateImages()
     }
 
