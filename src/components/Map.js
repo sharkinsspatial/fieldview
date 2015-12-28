@@ -32,7 +32,7 @@ var Map = React.createClass({
         mapboxgl.accessToken = 'pk.eyJ1IjoiaW5mcmFyZWRiYXJvbiIsImEiOiJkYWI1NDk2OTZkMjhiOGJjYzkyYmUyYzI2N2EwOTk4ZCJ9.g0jIz6KRGU-mlwHvtfAvGg'
         this.map = new mapboxgl.Map({
             container: 'map', // container id
-            style: 'mapbox://styles/mapbox/satellite-v8', //stylesheet location
+            style: 'mapbox://styles/infraredbaron/ciiq70k5700av8tm0wzlv38i5',
             center: [-119.76975111490768,
               45.7758644387534], // starting position
             zoom: 12 // starting zoom
@@ -40,36 +40,6 @@ var Map = React.createClass({
         let map = this.map
         map.addControl(new mapboxgl.Navigation())
         this.addSelectFieldControl()
-        map.on('style.load', function () {
-            map.addSource('fields', {
-                type: 'vector',
-                url: 'mapbox://infraredbaron.b6prazr2',
-                minzoom: '11'
-            })
-            map.addLayer({
-                "id": "field-fills",
-                "type": "fill",
-                "source": "fields",
-                "source-layer": "fields",
-                "layout": {},
-                "paint": {
-                    "fill-color": "#627BC1",
-                    "fill-opacity": 0.3
-                },
-                "interactive": true
-            })
-            map.addLayer({
-                "id": "field-borders",
-                "type": "line",
-                "source": "fields",
-                "source-layer": "fields",
-                "layout": {},
-                "paint": {
-                    "line-color": "#000000",
-                    "line-width": 1.5
-                }
-            })
-        })
     },
 
     removeImagery() {
@@ -142,18 +112,18 @@ var Map = React.createClass({
                     "type": "raster",
                     "source": "imagery",
                     "minzoom": 12
-                }, 'field-borders')
+                }, 'fields')
             }
         }
         if (!_.isEqual(dateFieldIds, nextDateFieldIds)) {
             let noFilter = ['!=', 'id', 0]
             let filter = ['all', ['in', 'id'].concat(nextDateFieldIds)]
             if (nextDateFieldIds.length == 0) {
-                this.map.setFilter('field-borders', noFilter )
-                this.map.setFilter('field-fills', noFilter )
+                this.map.setFilter('fields', noFilter )
+                this.map.setFilter('labels', noFilter )
             } else {
-                this.map.setFilter('field-borders', filter )
-                this.map.setFilter('field-fills', filter )
+                this.map.setFilter('fields', filter )
+                this.map.setFilter('labels', filter )
             }
         }
     },
