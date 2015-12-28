@@ -43,7 +43,8 @@ var Fields = React.createClass({
                 </DropdownButton>
                 <DropdownButton title={'Select Field'}
                     onSelect={this.handleSelectField}
-                    id={'fieldSelect'}>
+                    id={'fieldSelect'}
+                    disabled={this.props.farmFields.length > 0 ? false : true}>
                     {farmFieldItems}
                 </DropdownButton>
                 </div>
