@@ -16,6 +16,7 @@ import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
 import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
+import NavBrand from 'react-bootstrap/lib/NavBrand'
 
 class Application extends React.Component {
 
@@ -23,6 +24,9 @@ class Application extends React.Component {
         return (
             <div>
                 <Navbar fluid fixedTop toggleNavKey={0}>
+                    <NavBrand>
+                    <img src='/css/logo.png'/>
+                    </NavBrand>
                     <Nav right eventKey={0}>
                     <LinkContainer to='/fields'>
                         <NavItem eventKey={1}>Fields</NavItem>

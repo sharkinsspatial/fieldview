@@ -34,3 +34,7 @@ body {
 .mapboxgl-ctrl-icon.selectfield-ctrl.active {
     background-color: rgba(0,0,0,0.09);
 }
+.navbar-brand {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
