@@ -34,7 +34,7 @@ class ImageStore {
             this.dateImages
             this.dateImages.set(item.id, item)
         })
-        let dates =  _.sortBy(_.pluck(items,'collectionDate'), (value) =>
+        let dates =  _.sortBy(_.pluck(_.unique(items, 'collectionDate'),'collectionDate'), (value) =>
                               {return new Date(value)}).reverse()
         return dates
     }
@@ -119,7 +119,10 @@ class ImageStore {
             return image.collectionDate === date
         })
 
-        let dateFields = _(sameDates).pluck('field').unique('id').value()[0]
+        //let dateFields = _(sameDates).pluck('field').unique('id').value()
+        let dateFields = sameDates.map((image) => {
+            return image.field[0]
+        })
         let dateFieldIds = dateFields.map((item) => {
             return item.id
         })

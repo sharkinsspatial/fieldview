@@ -27,7 +27,8 @@ class FieldStore {
 
     onUpdate(response) {
         let farms = this.load(response.data)
-        this.setState({ fields: response.data, loading: false, farms: farms, farmFields: [] })
+        let fields = _.sortBy(response.data, 'name')
+        this.setState({ fields: fields, loading: false, farms: farms, farmFields: [] })
     }
 
     onSetActiveField(id) {

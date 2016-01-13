@@ -7,7 +7,7 @@ const FieldSource = {
         remote(state) {
             let auth = AuthenticationStore.getState()
             let url = `${rootUrl}api/customers/` +
-                `${auth.customerId}/fields?access_token=${auth.token}&filter[include]=farm`
+                `${auth.customerId}/fields?access_token=${auth.token}&filter[order]=name&filter[include]=farm`
             return axios.get(url)
         },
         local(state) {

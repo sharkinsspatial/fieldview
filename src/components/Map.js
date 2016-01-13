@@ -104,7 +104,7 @@ var Map = React.createClass({
             if (nextProduct) {
                 this.map.addSource('imagery', {
                     "type": "raster",
-                    "url": `mapbox://${nextProduct.mapboxId}`,
+                    "url": `mapbox://infraredbaron.${nextProduct.id}`,
                         "tileSize": 256
                 });
                 this.map.addLayer({
