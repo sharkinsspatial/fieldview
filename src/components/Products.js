@@ -1,6 +1,7 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
+import ListHeader from './ListHeader'
 
 var Products = React.createClass({
     handleProductChange(item) {
@@ -20,9 +21,13 @@ var Products = React.createClass({
                 })
         }
         return (
+            <div>
+            <ListHeader text='Select A Product'
+                listItems={productItems}/>
             <ListGroup>
                 {productItems}
             </ListGroup>
+            </div>
         )
     }
 })
