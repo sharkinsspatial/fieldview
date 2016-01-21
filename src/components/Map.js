@@ -35,7 +35,8 @@ var Map = React.createClass({
             style: 'mapbox://styles/infraredbaron/ciiq70k5700av8tm0wzlv38i5',
             center: [-119.76975111490768,
               45.7758644387534], // starting position
-            zoom: 12 // starting zoom
+            zoom: 12,
+            maxZoom: 17// starting zoom
         })
         let map = this.map
         map.addControl(new mapboxgl.Navigation())
