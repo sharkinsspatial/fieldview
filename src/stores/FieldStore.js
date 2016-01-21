@@ -56,7 +56,7 @@ class FieldStore {
         let farmFields = this.state.fields.filter((field) => {
             return field.farm.id === id
         })
-        this.setState({ farmFields: farmFields})
+        this.setState({ farmFields: farmFields, activeFarm: id })
     }
 }
 

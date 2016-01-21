@@ -1,10 +1,8 @@
 import React from 'react'
-import Button from 'react-bootstrap/lib/Button'
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import MenuItem from 'react-bootstrap/lib/MenuItem'
-import Input from 'react-bootstrap/lib/Input'
+import ListGroup from 'react-bootstrap/lib/ListGroup'
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import Loading from './Loading'
-import Message from './Message'
+import ListHeader from './ListHeader'
 
 var Fields = React.createClass({
     componentWillMount() {
@@ -13,46 +11,35 @@ var Fields = React.createClass({
         }
     },
 
+    handleFieldChange(id) {
+        this.props.setActiveField(id)
+    },
+
     componentWillUnmount() {
         this.props.clearActiveField()
     },
 
-    handleSelectFarm(event, id) {
-        this.props.setActiveFarm(id)
-    },
-    handleSelectField(event, id) {
-        this.props.setActiveField(id)
-    },
     render() {
-        let farmItems = this.props.farms.map(item => {
-            return <MenuItem key={item.id} eventKey={item.id}
-                >{item.name}</MenuItem>
-        })
         let farmFieldItems = this.props.farmFields.map(item => {
-            return <MenuItem key={item.id} eventKey={item.id}
-                >{item.name}</MenuItem>
+            let active = ''
+            if (this.props.activeField) {
+                active = item.id === this.props.activeField.id
+                    ? 'active' : ''
+            }
+            return <ListGroupItem key={item.id}
+                onClick={this.handleFieldChange.bind(this, item.id)}
+                active={active}>{item.name}</ListGroupItem>
         })
+
         return (
             <div>
-            <Input>
-                <div className={'text-center'}>
-                <DropdownButton title={'Select Farm'}
-                    onSelect={this.handleSelectFarm}
-                    id={'farmSelect'}>
-                    {farmItems}
-                </DropdownButton>
-                <DropdownButton title={'Select Field'}
-                    onSelect={this.handleSelectField}
-                    id={'fieldSelect'}
-                    disabled={this.props.farmFields.length > 0 ? false : true}>
+                <ListHeader text='Select A Field'
+                    listItems={this.props.farmFields}/>
+                <ListGroup>
                     {farmFieldItems}
-                </DropdownButton>
-                </div>
-            </Input>
-            <Loading loading={this.props.loading}
-                message={'Loading your fields'}/>
-            <Message show={this.props.unauthorizedField}
-                message={'You do not have any images available for this field'}/>
+                </ListGroup>
+                <Loading loading={this.props.loading}
+                    message={'Loading your fields'}/>
             </div>
         )
     }
