@@ -24,7 +24,8 @@ var DateFields = React.createClass({
             }
             return <ListGroupItem key={item.id}
                 onClick={this.handleFieldChange.bind(this, item)}
-                active={active}>{item.name}</ListGroupItem>
+                active={active}>{item.name + ' - ' + item.farm.name}
+                </ListGroupItem>
         })
 
         return (

@@ -22,9 +22,22 @@ const ImageSource = {
     fetchDateImages: {
         remote(state) {
             let auth = AuthenticationStore.getState()
+            let fieldInclude = {
+                include: [{
+                    relation:"field",
+                    scope: {
+                        include: {
+                            relation:"farm"
+                        }
+                    }
+                },
+                {
+                    relation:"products"
+                }]
+            }
             let url = `${rootUrl}api/customers/` +
                 `${auth.customerId}/images?access_token=${auth.token}` +
-                `&filter[include]=products&filter[include]=field`
+                `&filter=${JSON.stringify(fieldInclude)}`
             return axios.get(url)
         },
 
