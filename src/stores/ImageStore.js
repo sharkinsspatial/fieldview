@@ -13,6 +13,7 @@ class ImageStore {
         this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
         this.bindAction(FieldActions.setActiveField, this.onSetActiveField)
+        this.bindAction(FieldActions.setActiveFarm, this.onSetActiveFarm)
         this.bindAction(ImageActions.setActiveDate, this.onSetActiveDate)
         this.bindAction(ImageActions.getDateImages, this.getDateImages)
         this.bindAction(ImageActions.updateFieldImages, this.onUpdateFieldImages)
@@ -96,6 +97,12 @@ class ImageStore {
                 this.getInstance().fetchFieldImages()
             }
         }
+    }
+
+    onSetActiveFarm() {
+        this.setState({ fieldImages: [], activeImage: null,
+                      activeProduct: null, loading: false })
+
     }
 
     selectDateFieldImage(fieldId) {
