@@ -27,7 +27,7 @@ class Login extends React.Component {
         let loginBtnClass = classNames({
             'fa': true,
             'fa-refresh': this.state.loginLoading,
-            'fa-spin': this.state.loginLoading,
+            'fa-spin': this.state.loginLoading
         })
         let textClass = classNames({
             'text-center': true,
@@ -60,7 +60,7 @@ class Login extends React.Component {
         let credentials = { 'email': this.refs.loginEmail.getValue(),
                 'password': this.refs.loginPassword.getValue() }
         this.props.fetchToken(credentials)
-    }
+    };
 }
 
 export default Login

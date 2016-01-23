@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             options: {
                 //Stage 0 necessary for ES7 property initializers for 'this'
                 //autobinding on React ES6 classes.
-                transform: [['babelify', {'stage': 0}]]
+                transform: [['babelify', {presets:['es2015', 'stage-0', 'react']}]]
             },
             dev: {
                 files: files,
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
                     src: 'dist/**'
                 },
                 {
-                    src: 'css/**',
+                    src: 'css/**'
                 },
                 {
                     src: 'node_modules/mapbox-gl/dist/mapbox-gl.css'
