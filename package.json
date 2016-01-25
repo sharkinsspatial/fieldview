@@ -18,7 +18,7 @@
     ]
   },
   "scripts": {
-    "test": "browserify test/test.js -d | smokestack -b chrome"
+    "test": "browserify test/Test.js -d | smokestack -b chrome"
   },
   "repository": {
     "type": "git",

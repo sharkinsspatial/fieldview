@@ -4,7 +4,7 @@ import FieldActions from '../actions/FieldActions'
 import moment from 'moment'
 import _ from 'lodash'
 
-class FieldStore {
+export class FieldStore {
     constructor() {
         this.fieldMap = new Map()
         this.registerAsync(FieldSource)
