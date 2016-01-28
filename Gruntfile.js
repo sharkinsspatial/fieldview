@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             options: {
                 //Stage 0 necessary for ES7 property initializers for 'this'
                 //autobinding on React ES6 classes.
-                transform: [['babelify', {presets:['es2015', 'stage-0', 'react']}]]
+                transform: [['babelify', {'stage': 0}]]
             },
             dev: {
                 files: files,
