@@ -59,6 +59,8 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-env": "^0.4.4",
     "grunt-replace": "^0.11.0",
+    "react-addons-test-utils": "^0.14.7",
+    "sinon": "^1.17.3",
     "smokestack": "^3.4.1",
     "tape": "^4.4.0"
   }
