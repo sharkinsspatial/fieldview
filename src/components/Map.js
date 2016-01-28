@@ -111,8 +111,7 @@ var Map = React.createClass({
                 this.map.addLayer({
                     "id": "imagery",
                     "type": "raster",
-                    "source": "imagery",
-                    "minzoom": 12
+                    "source": "imagery"
                 }, 'fields')
             }
         }
