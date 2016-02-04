@@ -3,7 +3,11 @@ import ImageSource from '../sources/ImageSource'
 import FieldActions from '../actions/FieldActions'
 import ImageActions from '../actions/ImageActions'
 import FieldStore from './FieldStore'
-import _ from 'lodash'
+import sortby from 'lodash.sortby'
+import pluck from 'lodash.pluck'
+import uniqby from 'lodash.uniqby'
+import reverse from 'lodash.reverse'
+
 
 class ImageStore {
     constructor() {
@@ -35,8 +39,8 @@ class ImageStore {
             this.dateImages
             this.dateImages.set(item.id, item)
         })
-        let dates =  _.sortBy(_.pluck(_.unique(items, 'collectionDate'),'collectionDate'), (value) =>
-                              {return new Date(value)}).reverse()
+        let dates = sortby(pluck(uniqby(items, 'collectionDate'), 'collectionDate'),
+                           (value) => {return new Date(value)}).reverse()
         return dates
     }
 

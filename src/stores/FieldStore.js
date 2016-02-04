@@ -2,7 +2,9 @@ import alt from '../alt'
 import FieldSource from '../sources/FieldSource'
 import FieldActions from '../actions/FieldActions'
 import moment from 'moment'
-import _ from 'lodash'
+import sortby from 'lodash.sortby'
+import pluck from 'lodash.pluck'
+import uniqby from 'lodash.uniqby'
 
 export class FieldStore {
     constructor() {
@@ -21,13 +23,13 @@ export class FieldStore {
         items.forEach((item) => {
             this.fieldMap.set(item.id, item)
         })
-        let farms = _(items).pluck('farm').unique('id').value()
+        let farms = uniqby(pluck(items, 'farm'), 'id')
         return farms
     }
 
     onUpdate(response) {
         let farms = this.load(response.data)
-        let fields = _.sortBy(response.data, 'name')
+        let fields = sortby(response.data, 'name')
         this.setState({ fields: fields, loading: false, farms: farms, farmFields: [] })
     }
 

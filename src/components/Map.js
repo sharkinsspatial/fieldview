@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Classnames from 'classnames'
-import _ from 'lodash'
+import isequal from 'lodash.isequal'
 
 var Map = React.createClass({
     //propTypes: {
@@ -115,7 +115,7 @@ var Map = React.createClass({
                 }, 'fields')
             }
         }
-        if (!_.isEqual(dateFieldIds, nextDateFieldIds)) {
+        if (!isequal(dateFieldIds, nextDateFieldIds)) {
             let noFilter = ['!=', 'id', 0]
             let filter = ['all', ['in', 'id'].concat(nextDateFieldIds)]
             if (nextDateFieldIds.length == 0) {
