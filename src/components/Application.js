@@ -11,7 +11,7 @@ import Navbar from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Nav'
 import NavItem from 'react-bootstrap/lib/NavItem'
 import {LinkContainer} from 'react-router-bootstrap'
-import ImageSelector from './ImageSelector'
+import FieldsContainer from './FieldsContainer'
 import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
 import MapContianer from './MapContainer'
@@ -38,7 +38,7 @@ class Application extends React.Component {
                 </Navbar>
                 <Grid fluid>
                 <Row>
-                <Col className={'scroll'} md={4}>
+                <Col md={4}>
                 <Panel>
                     {this.props.children}
                 </Panel>
@@ -62,7 +62,7 @@ function requireAuthorization(nextState, replaceState) {
 ReactDOM.render((
     <Router>
         <Route path='/' component={Application}>
-            <Route path='fields' component={ImageSelector}
+            <Route path='fields' component={FieldsContainer}
                 onEnter={requireAuthorization}/>
             <IndexRoute component={DateFieldsContainer}
                 onEnter={requireAuthorization}/>

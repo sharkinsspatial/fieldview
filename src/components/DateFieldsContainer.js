@@ -8,16 +8,33 @@ import FieldActions from '../actions/FieldActions'
 import Dates from './Dates'
 import DateFields from './DateFields'
 import Products from './Products'
+import Grid from 'react-bootstrap/lib/Grid'
+import Col from 'react-bootstrap/lib/Col'
+import Row from 'react-bootstrap/lib/Row'
 
 var DateFieldsContainer = React.createClass({
     render() {
         return (
-            <AltContainer stores={{ImageStore: ImageStore, FieldStore: FieldStore}}
-                actions={{ImageActions: ImageActions, FieldActions: FieldActions}}>
-                <Dates/>
-                <DateFields/>
-                <Products/>
-            </AltContainer>
+                <Grid fluid>
+                <Row>
+                <Col className={'scroll'} md={6}>
+                    <AltContainer stores={{ImageStore: ImageStore, FieldStore: FieldStore}}
+                        actions={{ImageActions: ImageActions, FieldActions: FieldActions}}>
+                        <Dates/>
+                    </AltContainer>
+                </Col>
+                <Col className={'scroll'} md={6}>
+                    <AltContainer stores={{ImageStore: ImageStore, FieldStore: FieldStore}}
+                        actions={{ImageActions: ImageActions, FieldActions: FieldActions}}>
+                        <DateFields/>
+                    </AltContainer>
+                </Col>
+                </Row>
+                    <AltContainer stores={{ImageStore: ImageStore, FieldStore: FieldStore}}
+                        actions={{ImageActions: ImageActions, FieldActions: FieldActions}}>
+                        <Products/>
+                    </AltContainer>
+                </Grid>
         )
     }
 })

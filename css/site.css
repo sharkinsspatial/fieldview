@@ -14,7 +14,15 @@ body {
 }
 .scroll {
     overflow-y: scroll;
-    height: 100%;
+    height: 70%;
+}
+.farmScroll {
+    overflow-y: scroll;
+    height: 30%;
+}
+.fieldScroll {
+    overflow-y: scroll;
+    height: 50%;
 }
 .spinnerSpacing {
     margin-bottom: 15px;
