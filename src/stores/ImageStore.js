@@ -8,7 +8,6 @@ import pluck from 'lodash.pluck'
 import uniqby from 'lodash.uniqby'
 import reverse from 'lodash.reverse'
 
-
 class ImageStore {
     constructor() {
         this.dateImages = new Map()
@@ -32,6 +31,8 @@ class ImageStore {
         items.forEach((item) => {
             this.fieldImages.set(item.id, item)
         })
+        let images = sortby(items, 'collectionDate').reverse()
+        return images
     }
 
     loadDateImages(items) {
@@ -45,8 +46,8 @@ class ImageStore {
     }
 
     onUpdateFieldImages(response) {
-        this.loadFieldImages(response.data)
-        this.setState({ fieldImages: response.data, loading: false,
+        let images = this.loadFieldImages(response.data)
+        this.setState({ fieldImages: images, loading: false,
                       activeImage: null, activeProduct: null })
     }
 

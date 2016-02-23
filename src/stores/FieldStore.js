@@ -6,7 +6,7 @@ import sortby from 'lodash.sortby'
 import pluck from 'lodash.pluck'
 import uniqby from 'lodash.uniqby'
 
-export class FieldStore {
+class FieldStore {
     constructor() {
         this.fieldMap = new Map()
         this.registerAsync(FieldSource)
