@@ -15,7 +15,7 @@ class Login extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.customerId) {
             setTimeout(() => {
-                this.props.history.pushState(null, '/fields', null)
+                this.props.history.pushState(null, '/', null)
             }, 0)
         }
         if (nextProps.loginError) {

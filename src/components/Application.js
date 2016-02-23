@@ -31,7 +31,7 @@ class Application extends React.Component {
                     <LinkContainer to='/fields'>
                         <NavItem eventKey={1}>Fields</NavItem>
                     </LinkContainer>
-                    <LinkContainer to='/dates'>
+                    <LinkContainer to='/'>
                         <NavItem eventKey={2}>Dates</NavItem>
                     </LinkContainer>
                     </Nav>
@@ -64,7 +64,7 @@ ReactDOM.render((
         <Route path='/' component={Application}>
             <Route path='fields' component={ImageSelector}
                 onEnter={requireAuthorization}/>
-            <Route path='dates' component={DateFieldsContainer}
+            <IndexRoute component={DateFieldsContainer}
                 onEnter={requireAuthorization}/>
             <Route path='login' component={LoginContainer}/>
         </Route>
