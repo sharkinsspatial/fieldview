@@ -10,8 +10,6 @@ import reverse from 'lodash.reverse'
 
 class ImageStore {
     constructor() {
-        this.dateImages = new Map()
-        this.fieldImages = new Map()
         this.registerAsync(ImageSource)
         this.bindAction(ImageActions.setActiveImage, this.onSetActiveImage)
         this.bindAction(ImageActions.setActiveProduct, this.onSetActiveProduct)
@@ -28,18 +26,11 @@ class ImageStore {
     }
 
     loadFieldImages(items) {
-        items.forEach((item) => {
-            this.fieldImages.set(item.id, item)
-        })
         let images = sortby(items, 'collectionDate').reverse()
         return images
     }
 
     loadDateImages(items) {
-        items.forEach((item) => {
-            this.dateImages
-            this.dateImages.set(item.id, item)
-        })
         let dates = sortby(pluck(uniqby(items, 'collectionDate'), 'collectionDate'),
                            (value) => {return new Date(value)}).reverse()
         return dates
@@ -59,10 +50,19 @@ class ImageStore {
     }
 
     onSetActiveImage(id) {
-        let activeImage = this.fieldImages.get(id)
+        let activeImage = this.state.fieldImages.find((image) => {
+            return image.id === id
+        })
         if (activeImage) {
+            let activeProduct
+            if (activeImage.products && activeImage.products.length > 0) {
+                activeProduct = activeImage.products[0]
+            }
+            else {
+                activeProduct = null
+            }
             this.setState({ activeImage: activeImage,
-                          activeProduct: activeImage.products[0] })
+                          activeProduct: activeProduct })
         }
         else
         {
@@ -107,7 +107,6 @@ class ImageStore {
     onSetActiveFarm() {
         this.setState({ fieldImages: [], activeImage: null,
                       activeProduct: null, loading: false })
-
     }
 
     selectDateFieldImage(fieldId) {
