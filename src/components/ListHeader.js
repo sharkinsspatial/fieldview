@@ -3,8 +3,8 @@ import classNames from 'classnames'
 
 var ListHeader = React.createClass({
     propTypes: {
-        text: React.PropTypes.string.isRequired,
-        listItems: React.PropTypes.array.isRequired
+        text: React.PropTypes.string,
+        listItems: React.PropTypes.array
     },
 
     render() {

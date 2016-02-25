@@ -2,7 +2,6 @@ import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import moment from 'moment'
-import ListHeader from './ListHeader'
 
 var Images = React.createClass({
     handleImageChange(item) {
@@ -27,13 +26,9 @@ var Images = React.createClass({
                     active={active}>{formatDate}</ListGroupItem>
         })
         return (
-            <div>
-            <ListHeader text='Select A Date'
-                listItems={this.props.ImageStore.fieldImages}/>
             <ListGroup>
                 {imageItems}
             </ListGroup>
-            </div>
         )
     }
 })

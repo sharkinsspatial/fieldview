@@ -1,8 +1,6 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
-import Loading from './Loading'
-import ListHeader from './ListHeader'
 
 var Fields = React.createClass({
     componentWillMount() {
@@ -32,13 +30,9 @@ var Fields = React.createClass({
         })
 
         return (
-            <div>
-                <ListHeader text='Select A Field'
-                    listItems={this.props.farmFields}/>
-                <ListGroup>
-                    {farmFieldItems}
-                </ListGroup>
-            </div>
+            <ListGroup>
+                {farmFieldItems}
+            </ListGroup>
         )
     }
 })

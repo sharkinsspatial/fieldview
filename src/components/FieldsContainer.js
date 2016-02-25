@@ -14,51 +14,68 @@ import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
 import Loading from './Loading'
 import Message from './Message'
+import ListHeader from './ListHeader'
 
 var FieldsContainer = React.createClass({
     render() {
         return (
-            <Grid fluid>
-            <Row>
-                <Col className={'farmScroll'} md={12}>
-                    <AltContainer store={FieldStore} actions={FieldActions}>
-                        <Farms/>
-                    </AltContainer>
-                </Col>
-            </Row>
+        <Grid fluid>
+        <Row>
+            <Col className={'farmScroll'} md={12}>
+                <AltContainer store={FieldStore} actions={FieldActions}>
+                    <Farms/>
+                </AltContainer>
+            </Col>
+        </Row>
+        <AltContainer stores={[FieldStore]} inject={ {
+            loading: (props) => { return FieldStore.getState().loading },
+            message: 'Loading your fields' } } >
+            <Loading/>
+        </AltContainer>
+        <Row>
+        <Col md={6}>
             <AltContainer stores={[FieldStore]} inject={ {
-                loading: (props) => { return FieldStore.getState().loading },
-                message: 'Loading your fields' } } >
-                <Loading/>
+                listItems: (props) => { return FieldStore.getState().farmFields},
+                text: 'Select A Field' } } >
+                <ListHeader/>
             </AltContainer>
-            <Row>
-                <Col className={'fieldScroll'} md={6}>
-                    <AltContainer store={FieldStore} actions={FieldActions}>
-                        <Fields/>
-                    </AltContainer>
-                </Col>
-                <Col className={'fieldScroll'} md={6}>
-                    <AltContainer stores={{ImageStore: ImageStore}}
-                        actions={{ImageActions: ImageActions}}>
-                        <Images/>
-                    </AltContainer>
-                </Col>
-            </Row>
+        </Col>
+        <Col md={6}>
             <AltContainer stores={[ImageStore]} inject={ {
-                loading: (props) => { return ImageStore.getState().loading },
-                message: 'Loading your images' } } >
-                <Loading/>
+                listItems: (props) => { return ImageStore.getState().fieldImages},
+                text: 'Select A Date' } } >
+                <ListHeader/>
             </AltContainer>
-            <AltContainer stores={[FieldStore]} inject={ {
-                show: (props) => { return FieldStore.getState().unauthorizedField },
-                message: 'You do not have any images available for this field' } } >
-                <Message/>
-            </AltContainer>
-            <AltContainer stores={{ImageStore: ImageStore}}
-                actions={{ImageActions: ImageActions}}>
-                <Products/>
-            </AltContainer>
-            </Grid>
+        </Col>
+        </Row>
+        <Row>
+            <Col className={'fieldScroll'} md={6}>
+                <AltContainer store={FieldStore} actions={FieldActions}>
+                    <Fields/>
+                </AltContainer>
+            </Col>
+            <Col className={'fieldScroll'} md={6}>
+                <AltContainer stores={{ImageStore: ImageStore}}
+                    actions={{ImageActions: ImageActions}}>
+                    <Images/>
+                </AltContainer>
+            </Col>
+        </Row>
+        <AltContainer stores={[ImageStore]} inject={ {
+            loading: (props) => { return ImageStore.getState().loading },
+            message: 'Loading your images' } } >
+            <Loading/>
+        </AltContainer>
+        <AltContainer stores={[FieldStore]} inject={ {
+            show: (props) => { return FieldStore.getState().unauthorizedField },
+            message: 'You do not have any images available for this field' } } >
+            <Message/>
+        </AltContainer>
+        <AltContainer stores={{ImageStore: ImageStore}}
+            actions={{ImageActions: ImageActions}}>
+            <Products/>
+        </AltContainer>
+        </Grid>
         )
     }
 })

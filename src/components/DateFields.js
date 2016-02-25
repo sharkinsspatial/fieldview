@@ -1,7 +1,6 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
-import ListHeader from './ListHeader'
 
 var DateFields = React.createClass({
     componentWillMount() {
@@ -28,13 +27,9 @@ var DateFields = React.createClass({
         })
 
         return (
-            <div>
-                <ListHeader text='Select A Field'
-                    listItems={this.props.ImageStore.dateFields}/>
-                <ListGroup>
-                    {fieldItems}
-                </ListGroup>
-            </div>
+            <ListGroup>
+                {fieldItems}
+            </ListGroup>
         )
     }
 })

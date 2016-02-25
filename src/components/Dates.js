@@ -2,7 +2,6 @@ import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import moment from 'moment'
-import ListHeader from './ListHeader'
 
 var Dates = React.createClass({
     componentDidMount() {
@@ -35,13 +34,9 @@ var Dates = React.createClass({
         })
 
         return (
-            <div>
-                <ListHeader text='Select A Date'
-                    listItems={this.props.ImageStore.dates}/>
-                <ListGroup>
-                    {dateItems}
-                </ListGroup>
-            </div>
+            <ListGroup>
+                {dateItems}
+            </ListGroup>
         )
     }
 })
