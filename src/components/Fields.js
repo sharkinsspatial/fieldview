@@ -3,7 +3,6 @@ import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import Loading from './Loading'
 import ListHeader from './ListHeader'
-import Message from './Message'
 
 var Fields = React.createClass({
     componentWillMount() {
@@ -39,10 +38,6 @@ var Fields = React.createClass({
                 <ListGroup>
                     {farmFieldItems}
                 </ListGroup>
-                <Loading loading={this.props.loading}
-                    message={'Loading your fields'}/>
-                <Message show={this.props.unauthorizedField}
-                    message={'You do not have any images available for this field'}/>
             </div>
         )
     }

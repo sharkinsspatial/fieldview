@@ -2,7 +2,6 @@ import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import moment from 'moment'
-import Loading from './Loading'
 import ListHeader from './ListHeader'
 
 var Dates = React.createClass({
@@ -42,8 +41,6 @@ var Dates = React.createClass({
                 <ListGroup>
                     {dateItems}
                 </ListGroup>
-                <Loading loading={this.props.ImageStore.loadingDates}
-                    message={'Loading your images'}/>
             </div>
         )
     }

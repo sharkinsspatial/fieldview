@@ -2,7 +2,6 @@ import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import moment from 'moment'
-import Loading from './Loading'
 import ListHeader from './ListHeader'
 
 var Images = React.createClass({
@@ -34,8 +33,6 @@ var Images = React.createClass({
             <ListGroup>
                 {imageItems}
             </ListGroup>
-            <Loading loading={this.props.ImageStore.loading}
-                message={'Loading your images'}/>
             </div>
         )
     }

@@ -1,7 +1,6 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
-import Message from './Message'
 import ListHeader from './ListHeader'
 
 var DateFields = React.createClass({
@@ -35,8 +34,6 @@ var DateFields = React.createClass({
                 <ListGroup>
                     {fieldItems}
                 </ListGroup>
-                <Message show={this.props.ImageStore.unavailableImage}
-                    message={'There is no image available for this field on the selected date'}/>
             </div>
         )
     }
