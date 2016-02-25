@@ -1,5 +1,8 @@
 {
-    "extends": "eslint:recommended",
+        "plugins": [
+            "react"
+        ],
+        "extends": "eslint:recommended",
         "ecmaFeatures": {
             "arrowFunctions": true,
             "binaryLiterals": false,
@@ -33,11 +36,12 @@
         "rules": {
             "strict": 0,
             "quotes": 0,
-            "no-unused-vars": 0,
             "camelcase": 0,
             "no-underscore-dangle": 0,
             "no-trailing-spaces": 1,
-            "no-console": 0
+            "no-console": 0,
+            "react/jsx-no-undef": 1,
+            "react/jsx-uses-vars": 1
         }
 }
 
