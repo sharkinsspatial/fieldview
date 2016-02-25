@@ -28,7 +28,7 @@
     "lodash.reverse": "^4.0.1",
     "lodash.sortby": "^4.0.2",
     "lodash.uniqby": "^4.0.3",
-    "mapbox-gl": "^0.12.2",
+    "mapbox-gl": "^0.14.1",
     "moment": "^2.10.6",
     "react": "^0.14.2",
     "react-bootstrap": "^0.27.3",
