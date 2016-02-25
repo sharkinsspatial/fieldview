@@ -28,7 +28,6 @@ var Map = React.createClass({
     },
 
     componentDidMount: function() {
-        var el = ReactDOM.findDOMNode()
         mapboxgl.accessToken = 'pk.eyJ1IjoiaW5mcmFyZWRiYXJvbiIsImEiOiJkYWI1NDk2OTZkMjhiOGJjYzkyYmUyYzI2N2EwOTk4ZCJ9.g0jIz6KRGU-mlwHvtfAvGg'
         this.map = new mapboxgl.Map({
             container: 'map', // container id
