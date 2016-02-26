@@ -56,15 +56,17 @@ class ImageStore {
         })
         if (activeImage) {
             let activeProduct
+            let mapboxError = false
             if (activeImage.products && activeImage.products.length > 0) {
                 activeProduct = activeImage.products[0]
             }
             else {
                 activeProduct = null
+                mapboxError = true
             }
             this.setState({ activeImage: activeImage,
                           activeProduct: activeProduct,
-                        mapboxError: false })
+                        mapboxError: mapboxError })
         }
         else
         {
