@@ -1,6 +1,5 @@
 /*eslint-disable no-console */
 import test from 'tape'
-import React from 'react'
 import alt from '../src/alt'
 import ImageActions from '../src/actions/ImageActions'
 import ImageStore from '../src/stores/ImageStore'
@@ -19,12 +18,23 @@ test('ImageStore', (t) => {
             t.end()
     })
 
-    t.test('activeImage is set correctly', (t) => {
+    t.test('setActiveImage', (t) => {
         let action = ImageActions.setActiveImage.id
         let data = 0
         alt.dispatcher.dispatch({action, data})
         t.deepEqual(ImageStore.getState().activeImage, dateData.data[0])
-        t.notOk(ImageStore.getState().activeProduct, 'Active product is null with no prodcuts')
+        t.notOk(ImageStore.getState().activeProduct,
+                'Active product is null with no prodcuts')
+        t.ok(ImageStore.getState().mapboxError,
+             'Sends error message with no products')
+        data = 1
+        alt.dispatcher.dispatch({action, data })
+        t.deepEqual(ImageStore.getState().activeImage, dateData.data[1])
+        t.deepEqual(ImageStore.getState().activeProduct,
+                    dateData.data[1].products[0],
+                    'Sets activeProduct to first product by default')
+        t.notOk(ImageStore.getState().mapboxError,
+               'No error message with products')
         t.end()
     })
 
