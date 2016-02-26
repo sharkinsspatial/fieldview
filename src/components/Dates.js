@@ -22,7 +22,7 @@ var Dates = React.createClass({
     render() {
         let dateItems = this.props.ImageStore.dates.map(item => {
             let dateNoTime = item.split('T')[0]
-            let formatDate = moment(dateNoTime).format('MMMM Do YYYY')
+            let formatDate = moment(dateNoTime).format('MMM Do YYYY')
             let active = ''
             if (this.props.ImageStore.activeDate) {
                 active = item === this.props.ImageStore.activeDate

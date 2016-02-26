@@ -16,7 +16,7 @@ var Images = React.createClass({
         let imageItems = this.props.ImageStore.fieldImages.map(item => {
             //Removes UTC Z time code from string.
             let dateNoTime = item.collectionDate.split('T')[0]
-            let formatDate = moment(dateNoTime).format('MMMM Do YYYY')
+            let formatDate = moment(dateNoTime).format('MMM Do YYYY')
             let active = ''
             if (this.props.ImageStore.activeImage) {
                 active = item.id === this.props.ImageStore.activeImage.id ? 'active' : ''
