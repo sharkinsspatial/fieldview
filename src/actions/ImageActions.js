@@ -6,7 +6,7 @@ class ImageActions {
                              'setActiveDate', 'getDateImages',
                              'updateFieldImages', 'updateDateImages',
                              'clearActiveDate', 'imagesFailed',
-                             'clearFieldImages')
+                             'clearFieldImages', 'sendMapboxError')
     }
 }
 

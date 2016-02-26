@@ -12,6 +12,7 @@ import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
 import Loading from './Loading'
+import Message from './Message'
 import ListHeader from './ListHeader'
 
 var DateFieldsContainer = React.createClass({
@@ -53,6 +54,11 @@ var DateFieldsContainer = React.createClass({
             </AltContainer>
         </Col>
         </Row>
+        <AltContainer stores={[ImageStore]} inject={ {
+            show: () => { return ImageStore.getState().mapboxError },
+            message: 'This image is still processing, please check back later' } } >
+            <Message/>
+        </AltContainer>
         <AltContainer stores={{ImageStore: ImageStore, FieldStore: FieldStore}}
             actions={{ImageActions: ImageActions, FieldActions: FieldActions}}>
             <Products/>

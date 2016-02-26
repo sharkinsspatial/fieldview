@@ -5,11 +5,6 @@ import Classnames from 'classnames'
 import isequal from 'lodash.isequal'
 
 var Map = React.createClass({
-    //propTypes: {
-    //view: React.PropTypes.object,
-    //token: React.PropTypes.string
-    //},
-
     render: function() {
         var mapStyle = {
             position: 'absolute',
@@ -40,6 +35,11 @@ var Map = React.createClass({
         let map = this.map
         map.addControl(new mapboxgl.Navigation())
         this.addSelectFieldControl()
+        map.off('source.error', map.onError);
+        map.off('tile.error', map.onError);
+        map.on('source.error', () => {
+            this.props.ImageActions.sendMapboxError()
+        })
     },
 
     removeImagery() {

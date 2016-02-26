@@ -1,7 +1,6 @@
 import alt from '../alt'
 import FieldSource from '../sources/FieldSource'
 import FieldActions from '../actions/FieldActions'
-import moment from 'moment'
 import sortby from 'lodash.sortby'
 import pluck from 'lodash.pluck'
 import uniqby from 'lodash.uniqby'

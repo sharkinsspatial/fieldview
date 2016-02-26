@@ -1,5 +1,4 @@
 import React from 'react'
-import alt from '../alt'
 import AltContainer from 'alt-container'
 import ImageStore from '../stores/ImageStore'
 import ImageActions from '../actions/ImageActions'
@@ -69,6 +68,11 @@ var FieldsContainer = React.createClass({
         <AltContainer stores={[FieldStore]} inject={ {
             show: (props) => { return FieldStore.getState().unauthorizedField },
             message: 'You do not have any images available for this field' } } >
+            <Message/>
+        </AltContainer>
+        <AltContainer stores={[ImageStore]} inject={ {
+            show: () => { return ImageStore.getState().mapboxError },
+            message: 'This image is still processing, please check back later' } } >
             <Message/>
         </AltContainer>
         <AltContainer stores={{ImageStore: ImageStore}}

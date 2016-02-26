@@ -21,8 +21,9 @@ class ImageStore {
         this.bindAction(ImageActions.updateDateImages, this.onUpdateDateImages)
         this.bindAction(ImageActions.clearActiveDate, this.onClearActiveDate)
         this.bindAction(ImageActions.clearFieldImages, this.onClearFieldImages)
+        this.bindAction(ImageActions.sendMapboxError, this.onSendMapboxError)
         this.state = { loading: false, dateImages: [], fieldImages: [],
-            dates: [], dateFields: [], loadingDates: true}
+            dates: [], dateFields: [], loadingDates: true, mapboxError: false }
     }
 
     loadFieldImages(items) {
@@ -62,11 +63,13 @@ class ImageStore {
                 activeProduct = null
             }
             this.setState({ activeImage: activeImage,
-                          activeProduct: activeProduct })
+                          activeProduct: activeProduct,
+                        mapboxError: false })
         }
         else
         {
-            this.setState({ activeImage: null, activeProduct: null })
+            this.setState({ activeImage: null, activeProduct: null,
+                            mapboxError: false })
         }
     }
 
@@ -74,7 +77,7 @@ class ImageStore {
         let activeProduct = this.state.activeImage.products.filter(item => {
             return id === item.id
         })[0]
-        this.setState({ activeProduct: activeProduct })
+        this.setState({ activeProduct: activeProduct, mapboxError: false })
     }
 
     onSetActiveField(id) {
@@ -82,23 +85,24 @@ class ImageStore {
         this.waitFor(FieldStore)
         if (FieldStore.getState().unauthorizedField) {
             this.setState({ fieldId: id, fieldImages: [], activeImage: null,
-                      activeProduct: null, loading: false})
+                      activeProduct: null, loading: false, mapboxError: null })
         } else {
             if (this.state.activeDate) {
                 let activeImage = this.selectDateFieldImage(id)
                 if (activeImage) {
                     this.setState({ activeImage: activeImage,
                         activeProduct: activeImage.products[0],
-                        unavailableImage: false
+                        unavailableImage: false, mapboxError: null
                     })
                 } else {
                     this.setState({ unavailableImage: true, activeImage: null,
-                        activeProduct: null})
+                        activeProduct: null, mapboxError: null })
                 }
             }
             else {
                 this.setState({ fieldId: id, fieldImages: [], activeImage: null,
-                              activeProduct: null, loading: true})
+                              activeProduct: null, loading: true,
+                              mapboxError: null })
                 this.getInstance().fetchFieldImages()
             }
         }
@@ -106,7 +110,7 @@ class ImageStore {
 
     onSetActiveFarm() {
         this.setState({ fieldImages: [], activeImage: null,
-                      activeProduct: null, loading: false })
+                      activeProduct: null, loading: false, mapboxError: false })
     }
 
     selectDateFieldImage(fieldId) {
@@ -138,16 +142,21 @@ class ImageStore {
             return item.id
         })
         this.setState({ dateFields: dateFields, dateFieldIds: dateFieldIds,
-                      activeDate: date, activeImage: null})
+                      activeDate: date, activeImage: null, mapboxError: null })
     }
 
     onClearActiveDate() {
         this.setState({ dateFields: [], dateFieldIds: [], activeDate: null,
-                      activeImage: null, activeProduct: null})
+                      activeImage: null, activeProduct: null, mapboxError: null })
     }
 
     onClearFieldImages() {
-        this.setState({ fieldImages: [], activeImage: null, activeProduct: null })
+        this.setState({ fieldImages: [], activeImage: null, activeProduct: null,
+                        mapboxError: false })
+    }
+
+    onSendMapboxError() {
+        this.setState({ mapboxError: true })
     }
 }
 
