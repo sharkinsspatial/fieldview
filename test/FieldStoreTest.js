@@ -1,6 +1,5 @@
 /*eslint-disable no-console */
 import test from 'tape'
-import React from 'react'
 import alt from '../src/alt'
 import FieldActions from '../src/actions/FieldActions'
 import FieldStore from '../src/stores/FieldStore'
