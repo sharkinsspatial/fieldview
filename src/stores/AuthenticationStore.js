@@ -9,6 +9,9 @@ class AuthenticationStore {
         this.bindAction(AuthenticationActions.fetchToken, this.onFetchToken)
         this.bindAction(AuthenticationActions.tokenFailed, this.onTokenFailed)
         this.bindAction(AuthenticationActions.updateToken, this.onUpdateToken)
+        this.bindAction(AuthenticationActions.setCurrentCustomer,
+                        this.onSetCurrentCustomer)
+        this.state = { customers: [] }
 
         this.exportPublicMethods({
             isLoggedIn: this.isLoggedIn
@@ -16,7 +19,16 @@ class AuthenticationStore {
     }
 
     onUpdateToken(response) {
-        this.setState({ token: response.data.id, customerId: response.data.customerId})
+        var customerId = null
+        var customers = []
+        if (response.data.customers.length === 1) {
+            customerId = response.data.customers[0].id
+        }
+        if (response.data.customers.length > 1) {
+            customers = response.data.customers
+        }
+        this.setState({ token: response.data.id, customerId: customerId,
+            customers: customers})
     }
 
     onFetchToken(credentials) {
@@ -31,6 +43,10 @@ class AuthenticationStore {
 
     isLoggedIn() {
         return !!this.state.token
+    }
+
+    onSetCurrentCustomer(id) {
+        this.setState({ customerId: id })
     }
 }
 

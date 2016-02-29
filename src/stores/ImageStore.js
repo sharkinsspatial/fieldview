@@ -7,6 +7,9 @@ import sortby from 'lodash.sortby'
 import pluck from 'lodash.pluck'
 import uniqby from 'lodash.uniqby'
 import reverse from 'lodash.reverse'
+import AuthenticationStore from './AuthenticationStore'
+import AuthenticationActions from '../actions/AuthenticationActions'
+
 
 class ImageStore {
     constructor() {
@@ -22,6 +25,8 @@ class ImageStore {
         this.bindAction(ImageActions.clearActiveDate, this.onClearActiveDate)
         this.bindAction(ImageActions.clearFieldImages, this.onClearFieldImages)
         this.bindAction(ImageActions.sendMapboxError, this.onSendMapboxError)
+        this.bindAction(AuthenticationActions.setCurrentCustomer,
+                        this.onSetCurrentCustomer)
         this.state = { loading: false, dateImages: [], fieldImages: [],
             dates: [], dateFields: [], loadingDates: true, mapboxError: false }
     }
@@ -159,6 +164,12 @@ class ImageStore {
 
     onSendMapboxError() {
         this.setState({ mapboxError: true })
+    }
+
+    onSetCurrentCustomer() {
+        this.waitFor(AuthenticationStore)
+        this.setState({ loading: false, dateImages: [], fieldImages: [],
+            dates: [], dateFields: [], loadingDates: true, mapboxError: false } )
     }
 }
 

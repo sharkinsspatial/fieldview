@@ -1,5 +1,4 @@
 import React from 'react'
-import alt from '../alt'
 import AltContainer from 'alt-container'
 import AuthenticationStore from '../stores/AuthenticationStore'
 import AuthenticationActions from '../actions/AuthenticationActions'

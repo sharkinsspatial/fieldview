@@ -1,8 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import Input from 'react-bootstrap/lib/Input'
-import ButtonInput from 'react-bootstrap/lib/ButtonInput'
-import { Router, Route, Link } from 'react-router'
 import Collapse from 'react-bootstrap/lib/Collapse'
 import Alert from 'react-bootstrap/lib/Alert'
 
@@ -13,6 +11,11 @@ class Login extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.customers.length > 0) {
+            setTimeout(() => {
+                this.props.history.pushState(null, 'customers', null)
+            }, 0)
+        }
         if (nextProps.customerId) {
             setTimeout(() => {
                 this.props.history.pushState(null, '/', null)

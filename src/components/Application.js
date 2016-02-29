@@ -16,6 +16,7 @@ import AuthenticationStore from '../stores/AuthenticationStore'
 import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
 import NavBrand from 'react-bootstrap/lib/NavBrand'
+import CustomersContainer from './CustomersContainer'
 
 class Application extends React.Component {
 
@@ -62,6 +63,8 @@ ReactDOM.render((
     <Router>
         <Route path='/' component={Application}>
             <Route path='fields' component={FieldsContainer}
+                onEnter={requireAuthorization}/>
+            <Route path='customers' component={CustomersContainer}
                 onEnter={requireAuthorization}/>
             <IndexRoute component={DateFieldsContainer}
                 onEnter={requireAuthorization}/>

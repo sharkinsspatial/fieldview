@@ -4,6 +4,8 @@ import FieldActions from '../actions/FieldActions'
 import sortby from 'lodash.sortby'
 import pluck from 'lodash.pluck'
 import uniqby from 'lodash.uniqby'
+import AuthenticationStore from './AuthenticationStore'
+import AuthenticationActions from '../actions/AuthenticationActions'
 
 class FieldStore {
     constructor() {
@@ -14,6 +16,8 @@ class FieldStore {
         this.bindAction(FieldActions.getFields, this.onGetFields)
         this.bindAction(FieldActions.setActiveFarm, this.onSetActiveFarm)
         this.bindAction(FieldActions.clearActiveField, this.onClearActiveField)
+        this.bindAction(AuthenticationActions.setCurrentCustomer,
+                        this.onSetCurrentCustomer)
         this.state = { fields: [], farms: [], farmFields: [], loading: true,
             activeField: null}
     }
@@ -58,6 +62,12 @@ class FieldStore {
             return field.farm.id === id
         })
         this.setState({ farmFields: farmFields, activeFarm: id })
+    }
+
+    onSetCurrentCustomer() {
+        this.waitFor(AuthenticationStore)
+        this.setState({ fields: [], farms: [], farmFields: [], loading: true,
+            activeField: null})
     }
 }
 
