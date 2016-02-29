@@ -17,6 +17,7 @@ import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
 import NavBrand from 'react-bootstrap/lib/NavBrand'
 import CustomersContainer from './CustomersContainer'
+import CustomersLink from './CustomersLink'
 
 class Application extends React.Component {
 
@@ -34,6 +35,7 @@ class Application extends React.Component {
                     <LinkContainer to='/'>
                         <NavItem eventKey={2}>Dates</NavItem>
                     </LinkContainer>
+                    <CustomersLink/>
                     </Nav>
                 </Navbar>
                 <Grid fluid>
