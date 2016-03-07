@@ -1,5 +1,4 @@
 import React from 'react'
-import alt from '../alt'
 import AltContainer from 'alt-container'
 import ImageStore from '../stores/ImageStore'
 import ImageActions from '../actions/ImageActions'
@@ -20,21 +19,21 @@ var DateFieldsContainer = React.createClass({
         return (
         <Grid fluid>
         <AltContainer stores={[ImageStore]} inject={ {
-            loading: (props) => { return ImageStore.getState().loadingDates },
+            loading: () => { return ImageStore.getState().loadingDates },
             message: 'Loading your images' } } >
             <Loading/>
         </AltContainer>
         <Row>
         <Col md={6}>
             <AltContainer stores={[ImageStore]} inject={ {
-                listItems: (props) => { return ImageStore.getState().dates},
+                listItems: () => { return ImageStore.getState().dates},
                 text: 'Select A Date' } } >
                 <ListHeader/>
             </AltContainer>
         </Col>
         <Col md={6}>
             <AltContainer stores={[ImageStore]} inject={ {
-                listItems: (props) => { return ImageStore.getState().dateFields},
+                listItems: () => { return ImageStore.getState().dateFields},
                 text: 'Select A Field' } } >
                 <ListHeader/>
             </AltContainer>
