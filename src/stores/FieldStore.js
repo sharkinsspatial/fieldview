@@ -9,7 +9,6 @@ import AuthenticationActions from '../actions/AuthenticationActions'
 
 class FieldStore {
     constructor() {
-        this.fieldMap = new Map()
         this.registerAsync(FieldSource)
         this.bindAction(FieldActions.updateFields, this.onUpdate)
         this.bindAction(FieldActions.setActiveField, this.onSetActiveField)
@@ -23,9 +22,6 @@ class FieldStore {
     }
 
     load(items) {
-        items.forEach((item) => {
-            this.fieldMap.set(item.id, item)
-        })
         let farms = uniqby(pluck(items, 'farm'), 'id')
         return farms
     }
@@ -37,7 +33,9 @@ class FieldStore {
     }
 
     onSetActiveField(id) {
-        let activeField = this.fieldMap.get(id)
+        let activeField = this.state.fields.find((field) => {
+            return field.id === id
+        })
         if (activeField) {
             this.setState({ activeField: activeField, unauthorizedField: false })
         }
