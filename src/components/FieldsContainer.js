@@ -27,21 +27,21 @@ var FieldsContainer = React.createClass({
             </Col>
         </Row>
         <AltContainer stores={[FieldStore]} inject={ {
-            loading: (props) => { return FieldStore.getState().loading },
+            loading: () => { return FieldStore.getState().loading },
             message: 'Loading your fields' } } >
             <Loading/>
         </AltContainer>
         <Row>
         <Col md={6}>
             <AltContainer stores={[FieldStore]} inject={ {
-                listItems: (props) => { return FieldStore.getState().farmFields},
+                listItems: () => { return FieldStore.getState().farmFields},
                 text: 'Select A Field' } } >
                 <ListHeader/>
             </AltContainer>
         </Col>
         <Col md={6}>
             <AltContainer stores={[ImageStore]} inject={ {
-                listItems: (props) => { return ImageStore.getState().fieldImages},
+                listItems: () => { return ImageStore.getState().fieldImages},
                 text: 'Select A Date' } } >
                 <ListHeader/>
             </AltContainer>
@@ -61,12 +61,12 @@ var FieldsContainer = React.createClass({
             </Col>
         </Row>
         <AltContainer stores={[ImageStore]} inject={ {
-            loading: (props) => { return ImageStore.getState().loading },
+            loading: () => { return ImageStore.getState().loading },
             message: 'Loading your images' } } >
             <Loading/>
         </AltContainer>
         <AltContainer stores={[FieldStore]} inject={ {
-            show: (props) => { return FieldStore.getState().unauthorizedField },
+            show: () => { return FieldStore.getState().unauthorizedField },
             message: 'You do not have any images available for this field' } } >
             <Message/>
         </AltContainer>
