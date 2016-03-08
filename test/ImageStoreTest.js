@@ -89,10 +89,18 @@ test('ImageStore', (t) => {
         data = 0
         action = FieldActions.setActiveField.id
         alt.dispatcher.dispatch({action, data})
+
         t.deepEqual(ImageStore.getState().activeImage,
                     dateData.data[0],
                     'Selects image with current date and field id')
         t.notOk(ImageStore.getState().activeProduct, 'This image has no products')
+
+        data = 1
+        alt.dispatcher.dispatch({action, data})
+
+        t.notOk(ImageStore.getState().activeImage,
+               'Active image is null for unauthorized field')
+
         t.end()
     })
 
