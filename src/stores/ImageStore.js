@@ -59,6 +59,17 @@ class ImageStore {
         let activeImage = this.state.fieldImages.find((image) => {
             return image.id === id
         })
+        this.setDefaultProduct(activeImage)
+    }
+
+    onSetActiveProduct(id) {
+        let activeProduct = this.state.activeImage.products.filter(item => {
+            return id === item.id
+        })[0]
+        this.setState({ activeProduct: activeProduct, mapboxError: false })
+    }
+
+    setDefaultProduct(activeImage) {
         if (activeImage) {
             let activeProduct
             let mapboxError = false
@@ -80,36 +91,21 @@ class ImageStore {
         }
     }
 
-    onSetActiveProduct(id) {
-        let activeProduct = this.state.activeImage.products.filter(item => {
-            return id === item.id
-        })[0]
-        this.setState({ activeProduct: activeProduct, mapboxError: false })
-    }
-
     onSetActiveField(id) {
     //Don't hit API when user clicks an unauthorized Field.
         this.waitFor(FieldStore)
         if (FieldStore.getState().unauthorizedField) {
             this.setState({ fieldId: id, fieldImages: [], activeImage: null,
-                      activeProduct: null, loading: false, mapboxError: null })
+                      activeProduct: null, loading: false, mapboxError: false })
         } else {
             if (this.state.activeDate) {
                 let activeImage = this.selectDateFieldImage(id)
-                if (activeImage) {
-                    this.setState({ activeImage: activeImage,
-                        activeProduct: activeImage.products[0],
-                        unavailableImage: false, mapboxError: null
-                    })
-                } else {
-                    this.setState({ unavailableImage: true, activeImage: null,
-                        activeProduct: null, mapboxError: null })
-                }
+                this.setDefaultProduct(activeImage)
             }
             else {
                 this.setState({ fieldId: id, fieldImages: [], activeImage: null,
                               activeProduct: null, loading: true,
-                              mapboxError: null })
+                              mapboxError: false})
                 this.getInstance().fetchFieldImages()
             }
         }
@@ -141,7 +137,6 @@ class ImageStore {
             return image.collectionDate === date
         })
 
-        //let dateFields = _(sameDates).pluck('field').unique('id').value()
         let dateFields = sameDates.map((image) => {
             return image.field[0]
         })
@@ -149,16 +144,16 @@ class ImageStore {
             return item.id
         })
         this.setState({ dateFields: dateFields, dateFieldIds: dateFieldIds,
-                      activeDate: date, activeImage: null, mapboxError: null })
+                      activeDate: date, activeImage: null, mapboxError: false })
     }
 
     onClearActiveDate() {
         this.setState({ dateFields: [], dateFieldIds: [], activeDate: null,
-                      activeImage: null, activeProduct: null, mapboxError: null })
+                      activeImage: null, activeProduct: null, mapboxError: false })
     }
 
     onClearFieldImages() {
-        this.setState({ fieldImages: [], activeImage: null, activeProduct: null,
+        this.setState({ fieldImages: [], activeImage: null, activeProduct: false,
                         mapboxError: false })
     }
 
