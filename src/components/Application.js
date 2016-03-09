@@ -18,6 +18,7 @@ import DateFieldsContainer from './DateFieldsContainer'
 import NavBrand from 'react-bootstrap/lib/NavBrand'
 import CustomersContainer from './CustomersContainer'
 import CustomersLink from './CustomersLink'
+import LogoContainer from './LogoContainer'
 
 class Application extends React.Component {
 
@@ -26,8 +27,9 @@ class Application extends React.Component {
             <div>
                 <Navbar fluid fixedTop toggleNavKey={0}>
                     <NavBrand>
-                    <img src='/css/logo.png'/>
+                    <img className='logo-image' src='/css/logo.png'/>
                     </NavBrand>
+                    <LogoContainer/>
                     <Nav right eventKey={0}>
                     <LinkContainer to='/fields'>
                         <NavItem eventKey={1}>Fields</NavItem>

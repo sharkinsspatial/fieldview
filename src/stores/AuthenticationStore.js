@@ -28,7 +28,7 @@ class AuthenticationStore {
             customers = response.data.customers
         }
         this.setState({ token: response.data.id, customerId: customerId,
-            customers: customers})
+            customers: customers, logo: response.data.logo })
     }
 
     onFetchToken(credentials) {
