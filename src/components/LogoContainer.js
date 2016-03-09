@@ -15,8 +15,18 @@ var LogoContainer = React.createClass({
 
 var Logo = React.createClass({
     render() {
+        var logo
+        if (this.props.logo && this.props.logo !== 0) {
+            var logoPath = `/css/${this.props.logo}.png`
+            logo = <img className='logo-image' src={logoPath}/>
+        }
+        else {
+            logo = <div></div>
+        }
         return (
-            <NavBrand>{this.props.logo}</NavBrand>
+            <NavBrand>
+                {logo}
+            </NavBrand>
         )
     }
 })
