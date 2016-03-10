@@ -140,10 +140,13 @@ class ImageStore {
         let dateFields = sameDates.map((image) => {
             return image.field[0]
         })
+        let sortedDateFields = sortby(sortby(dateFields, 'name'), (field) => {
+            return field.farm.name
+        })
         let dateFieldIds = dateFields.map((item) => {
             return item.id
         })
-        this.setState({ dateFields: dateFields, dateFieldIds: dateFieldIds,
+        this.setState({ dateFields: sortedDateFields, dateFieldIds: dateFieldIds,
                       activeDate: date, activeImage: null, mapboxError: false })
     }
 

@@ -8,11 +8,11 @@ import ImageStore from '../src/stores/ImageStore'
 test('ImageStore', (t) => {
     let dateData = {data :
         [{ id: 0, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 0, field: [{id: 0}]},
+            fieldId: 0, field: [{id: 0, name: 0, farm:{name: 0}}]},
         { id: 1, collectionDate: "2015-06-24T00:00:00.000Z",
-            fieldId: 1, products: [{id: 0}], field: [{id: 1}]},
+            fieldId: 1, products: [{id: 0}], field: [{id: 1, name: 1, farm:{name: 1}}]},
         { id: 2, collectionDate: "2015-05-25T00:00:00.000Z",
-            fieldId: 1}
+            fieldId: 1, field: [{id: 1, name: 1, farm:{name: 1}}]}
         ]}
 
     t.test('updateFieldImages', (t) => {
@@ -67,12 +67,38 @@ test('ImageStore', (t) => {
 
         data = '2014-05-24T00:00:00.000Z'
         alt.dispatcher.dispatch({action, data})
-        t.equal(ImageStore.getState().dateFields.length, 0)
-        t.equal(ImageStore.getState().dateFieldIds.length, 0)
+        t.equal(ImageStore.getState().dateFields.length, 0,
+                'Non-existent does not find any fields')
+        t.equal(ImageStore.getState().dateFieldIds.length, 0,
+                'Non-existent does not find any fields')
+
+        //Reload images data to test sorting.
+        data = {data : [{ id: 2, collectionDate: "2015-05-24T00:00:00.000Z",
+            fieldId: 2, field: [{id: 2, name: 'a', farm: {name: 'bfarm'}}]},
+            { id: 0, collectionDate: "2015-05-24T00:00:00.000Z",
+            fieldId: 0, field: [{id: 0, name: 'a', farm: {name: 'afarm'}}]},
+                { id: 1, collectionDate: "2015-05-24T00:00:00.000Z",
+            fieldId: 1, field: [{id: 1, name: 'b', farm: {name: 'afarm'}}]}
+        ]}
+
+        action = ImageActions.updateDateImages.id
+        alt.dispatcher.dispatch({action, data})
+
+        action = ImageActions.setActiveDate.id
+        data = '2015-05-24T00:00:00.000Z'
+        alt.dispatcher.dispatch({action, data})
+
+        t.equal(ImageStore.getState().dateFields[0].id, 0,
+               'Sorts dateFields by name and nested farm name')
+        t.equal(ImageStore.getState().dateFields[1].id, 1,
+               'Sorts dateFields by name and nested farm name')
+        t.equal(ImageStore.getState().dateFields[2].id, 2,
+               'Sorts dateFields by name and nested farm name')
         t.end()
     })
 
     t.test('setActiveField', (t) => {
+        //Need to upload data first
         let data = dateData
         let action = ImageActions.updateDateImages.id
         alt.dispatcher.dispatch({action, data})
@@ -100,7 +126,6 @@ test('ImageStore', (t) => {
 
         t.notOk(ImageStore.getState().activeImage,
                'Active image is null for unauthorized field')
-
         t.end()
     })
 
