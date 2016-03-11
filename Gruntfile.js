@@ -40,11 +40,13 @@ module.exports = function(grunt) {
                 NODE_ENV: 'production'
             }
         },
+        mapbox: grunt.file.readJSON('/Users/Sharkins/Documents/Mapbox/FieldView.json'),
         replace: {
             dist: {
                 options: {
                     patterns: [{ match: 'apiUrl', replacement:
-                        'http://fieldviewapi.herokuapp.com/'}],
+                        'http://fieldviewapi.herokuapp.com/'},
+                    { match: 'mapboxKey', replacement: '<%= mapbox.key %>'}],
                     usePrefix: false
                 },
                 files: [
@@ -55,7 +57,9 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     patterns: [{match: 'apiUrl', replacement:
-                        'http://localhost:3000/'}], usePrefix: false
+                        'http://localhost:3000/'},
+                    { match: 'mapboxKey', replacement: '<%= mapbox.key %>'}],
+                    usePrefix: false
                 },
                 files: [
                     {expand: true, flatten: true, src: ['dist/main.js'],

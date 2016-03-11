@@ -23,7 +23,7 @@ var Map = React.createClass({
     },
 
     componentDidMount: function() {
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaW5mcmFyZWRiYXJvbiIsImEiOiJkYWI1NDk2OTZkMjhiOGJjYzkyYmUyYzI2N2EwOTk4ZCJ9.g0jIz6KRGU-mlwHvtfAvGg'
+        mapboxgl.accessToken = 'mapboxKey'
         this.map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/infraredbaron/ciiq70k5700av8tm0wzlv38i5',
