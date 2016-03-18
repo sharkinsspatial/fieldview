@@ -1,7 +1,7 @@
 import alt from '../alt'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Router, Route, IndexRoute} from 'react-router'
+import {Router, Route, IndexRedirect} from 'react-router'
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
@@ -25,7 +25,7 @@ class Application extends React.Component {
     render() {
         return (
             <div>
-                <Navbar fluid>
+                <Navbar fluid fixedTop>
                 <Navbar.Header>
                 <Navbar.Brand>
                     <img className='logo-image' src='/css/logo.png'/>
@@ -35,7 +35,7 @@ class Application extends React.Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav eventKey={0}>
-                    <LinkContainer to='/'>
+                    <LinkContainer to='/dates'>
                         <NavItem eventKey={2}>Dates</NavItem>
                     </LinkContainer>
                     <LinkContainer to='/fields'>
@@ -71,12 +71,13 @@ function requireAuthorization(nextState, replaceState) {
 ReactDOM.render((
     <Router>
         <Route path='/' component={Application}>
+            <Route path='dates' component={DateFieldsContainer}
+                onEnter={requireAuthorization}/>
             <Route path='fields' component={FieldsContainer}
                 onEnter={requireAuthorization}/>
             <Route path='customers' component={CustomersContainer}
                 onEnter={requireAuthorization}/>
-            <IndexRoute component={DateFieldsContainer}
-                onEnter={requireAuthorization}/>
+            <IndexRedirect to='/dates'/>
             <Route path='login' component={LoginContainer}/>
         </Route>
     </Router>
