@@ -8,11 +8,11 @@ import ImageStore from '../src/stores/ImageStore'
 test('ImageStore', (t) => {
     let dateData = {data :
         [{ id: 0, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 0, field: [{id: 0, name: 0, farm:{name: 0}}]},
+            fieldId: 0, field: [{id: 0, name: 0, farm:{name: 0, id: 0}}]},
         { id: 1, collectionDate: "2015-06-24T00:00:00.000Z",
-            fieldId: 1, products: [{id: 0}], field: [{id: 1, name: 1, farm:{name: 1}}]},
+            fieldId: 1, products: [{id: 0}], field: [{id: 1, name: 1, farm:{name: 1, id: 1}}]},
         { id: 2, collectionDate: "2015-05-25T00:00:00.000Z",
-            fieldId: 1, field: [{id: 1, name: 1, farm:{name: 1}}]}
+            fieldId: 1, field: [{id: 1, name: 1, farm:{name: 1, id: 1}}]}
         ]}
 
     t.test('updateFieldImages', (t) => {
@@ -74,11 +74,11 @@ test('ImageStore', (t) => {
 
         //Reload images data to test sorting.
         data = {data : [{ id: 2, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 2, field: [{id: 2, name: 'a', farm: {name: 'bfarm'}}]},
+            fieldId: 2, field: [{id: 2, name: 'a', farm: {name: 'bfarm', id: 2}}]},
             { id: 0, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 0, field: [{id: 0, name: 'a', farm: {name: 'afarm'}}]},
+            fieldId: 0, field: [{id: 0, name: 'a', farm: {name: 'afarm', id: 1}}]},
                 { id: 1, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 1, field: [{id: 1, name: 'b', farm: {name: 'afarm'}}]}
+            fieldId: 1, field: [{id: 1, name: 'b', farm: {name: 'afarm', id: 1}}]}
         ]}
 
         action = ImageActions.updateDateImages.id
@@ -108,7 +108,7 @@ test('ImageStore', (t) => {
         alt.dispatcher.dispatch({action, data})
 
         //Field needs to be in FieldStore fields or it will be unauthorized
-        data = {data: [{id: 0, name: 'Field 0'}]}
+        data = {data: [{id: 0, name: 'Field 0', farm: {id: 1}}]}
         action = FieldActions.updateFields.id
         alt.dispatcher.dispatch({action, data})
 

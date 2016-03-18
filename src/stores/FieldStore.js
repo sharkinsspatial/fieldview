@@ -38,7 +38,12 @@ class FieldStore {
         })
         if (activeField) {
             let farmFields = this.state.fields.filter((field) => {
-                return field.farm.id === activeField.farm.id
+                if (field.farm && activeField.farm) {
+                    return field.farm.id === activeField.farm.id
+                }
+                else {
+                    return false
+                }
             })
             this.setState({ activeField: activeField, unauthorizedField: false,
                 activeFarm: activeField.farm.id, farmFields: farmFields })
