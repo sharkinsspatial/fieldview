@@ -15,7 +15,6 @@ import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
 //import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
-import NavBrand from 'react-bootstrap/lib/NavBrand'
 import CustomersContainer from './CustomersContainer'
 import CustomersLink from './CustomersLink'
 import LogoContainer from './LogoContainer'
@@ -26,20 +25,25 @@ class Application extends React.Component {
     render() {
         return (
             <div>
-                <Navbar fluid fixedTop toggleNavKey={0}>
-                    <NavBrand>
+                <Navbar fluid>
+                <Navbar.Header>
+                <Navbar.Brand>
                     <img className='logo-image' src='/css/logo.png'/>
-                    </NavBrand>
-                    <LogoContainer/>
-                    <Nav right eventKey={0}>
-                    <LinkContainer to='/fields'>
-                        <NavItem eventKey={1}>Fields</NavItem>
-                    </LinkContainer>
+                </Navbar.Brand>
+                <LogoContainer/>
+                <Navbar.Toggle/>
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <Nav eventKey={0}>
                     <LinkContainer to='/'>
                         <NavItem eventKey={2}>Dates</NavItem>
                     </LinkContainer>
+                    <LinkContainer to='/fields'>
+                        <NavItem eventKey={1}>Fields</NavItem>
+                    </LinkContainer>
                     <CustomersLink/>
                     </Nav>
+                </Navbar.Collapse>
                 </Navbar>
                 <Grid fluid>
                 <Row>

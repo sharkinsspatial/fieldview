@@ -1,7 +1,7 @@
 import React from 'react'
 import AltContainer from 'alt-container'
 import AuthenticationStore from '../stores/AuthenticationStore'
-import NavBrand from 'react-bootstrap/lib/NavBrand'
+import NavbarBrand from 'react-bootstrap/lib/NavbarBrand'
 
 var LogoContainer = React.createClass({
     render() {
@@ -24,9 +24,9 @@ var Logo = React.createClass({
             logo = <div></div>
         }
         return (
-            <NavBrand>
+            <NavbarBrand>
                 {logo}
-            </NavBrand>
+            </NavbarBrand>
         )
     }
 })
