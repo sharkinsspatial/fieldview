@@ -14,15 +14,15 @@ body {
 }
 .scroll {
     overflow-y: scroll;
-    height: 70%;
+    height: 50%;
 }
 .farmScroll {
     overflow-y: scroll;
-    height: 30%;
+    height: 25%;
 }
 .fieldScroll {
     overflow-y: scroll;
-    height: 50%;
+    height: 30%;
 }
 .spinnerSpacing {
     margin-bottom: 15px;
@@ -51,7 +51,7 @@ body {
 }
 .loading {
   position: absolute;
-  top: 50%;
+  /*top offset to handle menu bar size*/
+  top: 45%;
   left: 50%;
-  transform: translate(-50%, -50%);
 }
