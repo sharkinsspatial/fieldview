@@ -13,6 +13,7 @@ import Row from 'react-bootstrap/lib/Row'
 import Loading from './Loading'
 import Message from './Message'
 import ListHeader from './ListHeader'
+import SwitchMapView from './SwitchMapView'
 
 var DateFieldsContainer = React.createClass({
     render() {
@@ -22,6 +23,9 @@ var DateFieldsContainer = React.createClass({
             loading: () => { return ImageStore.getState().loadingDates },
             message: 'Loading your images' } } >
             <Loading/>
+        </AltContainer>
+        <AltContainer store={ImageStore} actions={ImageActions}>
+            <SwitchMapView/>
         </AltContainer>
         <Row>
         <Col md={6}>

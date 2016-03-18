@@ -37,10 +37,14 @@ class FieldStore {
             return field.id === id
         })
         if (activeField) {
-            this.setState({ activeField: activeField, unauthorizedField: false })
+            let farmFields = this.state.fields.filter((field) => {
+                return field.farm.id === activeField.farm.id
+            })
+            this.setState({ activeField: activeField, unauthorizedField: false,
+                activeFarm: activeField.farm.id, farmFields: farmFields })
         }
         else {
-            this.setState({ activeField: null, unauthorizedField: true })
+            this.setState({ activeField: null, unauthorizedField: true})
         }
     }
 

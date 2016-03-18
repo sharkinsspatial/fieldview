@@ -20,7 +20,7 @@ const ImageSource = {
     },
 
     fetchDateImages: {
-        remote(state) {
+        remote() {
             let auth = AuthenticationStore.getState()
             let fieldInclude = {
                 include: [{
@@ -47,6 +47,23 @@ const ImageSource = {
 
         success: ImageActions.updateDateImages,
         error: ImageActions.imagesFailed
+    },
+
+    fetchMapboxJSON: {
+        remote(state) {
+            let url = `https://api.mapbox.com/v4/infraredbaron.` +
+                `${state.activeProduct.id}.json?access_token=` +
+                `${state.mapboxToken}`
+
+            return axios.get(url)
+        },
+
+        shouldFetch() {
+            return true
+        },
+
+        success: ImageActions.updateMapboxJSON,
+        error: ImageActions.sendMapboxError
     }
 }
 

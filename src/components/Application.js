@@ -13,12 +13,13 @@ import {LinkContainer} from 'react-router-bootstrap'
 import FieldsContainer from './FieldsContainer'
 import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
-import MapContianer from './MapContainer'
+//import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
 import NavBrand from 'react-bootstrap/lib/NavBrand'
 import CustomersContainer from './CustomersContainer'
 import CustomersLink from './CustomersLink'
 import LogoContainer from './LogoContainer'
+import ViewContainer from './ViewContainer'
 
 class Application extends React.Component {
 
@@ -48,7 +49,7 @@ class Application extends React.Component {
                 </Panel>
                 </Col>
                 <Col md={8}>
-                    <MapContianer/>
+                    <ViewContainer/>
                 </Col>
                 </Row>
                 </Grid>

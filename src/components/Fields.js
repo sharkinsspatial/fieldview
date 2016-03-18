@@ -7,6 +7,11 @@ var Fields = React.createClass({
         if (this.props.fields.length == 0) {
             this.props.getFields()
         }
+        //This action will fetch fieldImages when the component mounts coming
+        //from dates view.
+        if (this.props.activeField) {
+            this.props.setActiveField(this.props.activeField.id)
+        }
     },
 
     handleFieldChange(id) {

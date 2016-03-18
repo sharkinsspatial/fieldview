@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import Classnames from 'classnames'
 import isequal from 'lodash.isequal'
@@ -40,14 +39,9 @@ var Map = React.createClass({
         map.on('source.error', () => {
             this.props.ImageActions.sendMapboxError()
         })
-    },
-
-    removeImagery() {
-        let imageryLayer = this.map.getLayer('imagery')
-        if (imageryLayer) {
-            this.map.removeLayer('imagery')
-            this.map.removeSource('imagery')
-        }
+        map.on('load', () => {
+            this.renderCurrentProps()
+        })
     },
 
     addSelectFieldControl() {
@@ -81,6 +75,57 @@ var Map = React.createClass({
         }
     },
 
+    renderCurrentProps() {
+        let activeField = this.props.FieldStore.activeField
+        if (activeField) {
+            this.map.fitBounds(activeField.bounds, {padding: 100})
+        }
+
+        let activeProduct = this.props.ImageStore.activeProduct
+        if (activeProduct) {
+            this.addImagery(activeProduct)
+        }
+
+        let dateFieldIds = this.props.ImageStore.dateFieldIds
+        this.setLabelFilter(dateFieldIds)
+    },
+
+    addImagery(product) {
+        this.removeImagery()
+        if (product) {
+            this.map.addSource('imagery', {
+                "type": "raster",
+                "url": `mapbox://infraredbaron.${product.id}`,
+                    "tileSize": 256
+            });
+            this.map.addLayer({
+                "id": "imagery",
+                "type": "raster",
+                "source": "imagery"
+            }, 'fields')
+        }
+    },
+
+    removeImagery() {
+        let imageryLayer = this.map.getLayer('imagery')
+        if (imageryLayer) {
+            this.map.removeLayer('imagery')
+            this.map.removeSource('imagery')
+        }
+    },
+
+    setLabelFilter(dateFieldIds) {
+        let noFilter = ['!=', 'id', 0]
+        let filter = ['all', ['in', 'id'].concat(dateFieldIds)]
+        if (dateFieldIds && dateFieldIds.length !== 0) {
+            this.map.setFilter('fields', filter )
+            this.map.setFilter('labels', filter )
+        } else {
+            this.map.setFilter('fields', noFilter )
+            this.map.setFilter('labels', noFilter )
+        }
+    },
+
     componentWillReceiveProps(nextProps) {
         let field = this.props.FieldStore.activeField
         let fieldId = field ? field.id : null
@@ -100,36 +145,11 @@ var Map = React.createClass({
             }
         }
         if (productId !== nextProductId) {
-            this.removeImagery()
-            if (nextProduct) {
-                this.map.addSource('imagery', {
-                    "type": "raster",
-                    "url": `mapbox://infraredbaron.${nextProduct.id}`,
-                        "tileSize": 256
-                });
-                this.map.addLayer({
-                    "id": "imagery",
-                    "type": "raster",
-                    "source": "imagery"
-                }, 'fields')
-            }
+            this.addImagery(nextProduct)
         }
         if (!isequal(dateFieldIds, nextDateFieldIds)) {
-            let noFilter = ['!=', 'id', 0]
-            let filter = ['all', ['in', 'id'].concat(nextDateFieldIds)]
-            if (nextDateFieldIds.length == 0) {
-                this.map.setFilter('fields', noFilter )
-                this.map.setFilter('labels', noFilter )
-            } else {
-                this.map.setFilter('fields', filter )
-                this.map.setFilter('labels', filter )
-            }
+            this.setLabelFilter(nextDateFieldIds)
         }
-    },
-
-    componentWillUnmount: function() {
-        this.map.remove()
-        ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode())
     }
 });
 

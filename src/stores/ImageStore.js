@@ -27,8 +27,11 @@ class ImageStore {
         this.bindAction(ImageActions.sendMapboxError, this.onSendMapboxError)
         this.bindAction(AuthenticationActions.setCurrentCustomer,
                         this.onSetCurrentCustomer)
+        this.bindAction(ImageActions.updateMapboxJSON, this.onUpdateMapboxJSON)
+        this.bindAction(ImageActions.setMapView, this.onSetMapView)
         this.state = { loading: false, dateImages: [], fieldImages: [],
-            dates: [], dateFields: [], loadingDates: true, mapboxError: false }
+            dates: [], dateFields: [], loadingDates: true, mapboxError: false,
+            slides: true, mapboxToken: 'mapboxKey', mapView: true}
     }
 
     loadFieldImages(items) {
@@ -67,6 +70,9 @@ class ImageStore {
             return id === item.id
         })[0]
         this.setState({ activeProduct: activeProduct, mapboxError: false })
+        if (this.state.slides && activeProduct) {
+            this.getInstance().fetchMapboxJSON()
+        }
     }
 
     setDefaultProduct(activeImage) {
@@ -82,12 +88,15 @@ class ImageStore {
             }
             this.setState({ activeImage: activeImage,
                           activeProduct: activeProduct,
-                        mapboxError: mapboxError })
+                        mapboxError: mapboxError, mapboxJSON: null })
+            if (this.state.slides && activeProduct) {
+                this.getInstance().fetchMapboxJSON()
+            }
         }
         else
         {
             this.setState({ activeImage: null, activeProduct: null,
-                            mapboxError: false })
+                            mapboxError: false, mapboxJSON: null })
         }
     }
 
@@ -147,7 +156,8 @@ class ImageStore {
             return item.id
         })
         this.setState({ dateFields: sortedDateFields, dateFieldIds: dateFieldIds,
-                      activeDate: date, activeImage: null, mapboxError: false })
+                      activeDate: date, activeImage: null, mapboxError: false,
+                    mapboxJSON: null })
     }
 
     onClearActiveDate() {
@@ -168,6 +178,14 @@ class ImageStore {
         this.waitFor(AuthenticationStore)
         this.setState({ loading: false, dateImages: [], fieldImages: [],
             dates: [], dateFields: [], loadingDates: true, mapboxError: false } )
+    }
+
+    onUpdateMapboxJSON(response) {
+        this.setState({ mapboxJSON: response.data })
+    }
+
+    onSetMapView(bool) {
+        this.setState({ mapView: bool })
     }
 }
 
