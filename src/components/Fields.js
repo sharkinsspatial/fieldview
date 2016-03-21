@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 
@@ -31,7 +32,7 @@ var Fields = React.createClass({
             }
             return <ListGroupItem key={item.id}
                 onClick={this.handleFieldChange.bind(this, item.id)}
-                active={active}>{item.name}</ListGroupItem>
+                active={active} ref={active}>{item.name}</ListGroupItem>
         })
 
         return (
@@ -39,6 +40,18 @@ var Fields = React.createClass({
                 {farmFieldItems}
             </ListGroup>
         )
+    },
+
+    componentDidMount() {
+        this.makeActiveItemVisible()
+    },
+
+    makeActiveItemVisible() {
+        let activeItemComponent = this.refs.active
+        if (activeItemComponent) {
+            let domNode = ReactDOM.findDOMNode(activeItemComponent)
+            domNode.scrollIntoView()
+        }
     }
 })
 
