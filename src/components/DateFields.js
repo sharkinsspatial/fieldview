@@ -20,9 +20,10 @@ var DateFields = React.createClass({
                 active = item.id === this.props.FieldStore.activeField.id ?
                     'active' : ''
             }
+            let farmName = item.farm ? item.farm.name : 'None'
             return <ListGroupItem key={item.id}
                 onClick={this.handleFieldChange.bind(this, item)}
-                active={active}>{item.name + ' - ' + item.farm.name}
+                active={active}>{item.name + ' - ' + farmName}
                 </ListGroupItem>
         })
 
