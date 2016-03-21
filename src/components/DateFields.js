@@ -9,6 +9,15 @@ var DateFields = React.createClass({
         }
     },
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.ImageStore.activeDate !== nextProps.ImageStore.activeDate) {
+            if (nextProps.ImageStore.dateFields.length > 0) {
+                this.props.FieldActions.setActiveField(nextProps.ImageStore
+                    .dateFields[0].id)
+            }
+        }
+    },
+
     handleFieldChange(item) {
         this.props.FieldActions.setActiveField(item.id)
     },
