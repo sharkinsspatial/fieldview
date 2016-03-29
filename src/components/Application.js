@@ -13,7 +13,6 @@ import {LinkContainer} from 'react-router-bootstrap'
 import FieldsContainer from './FieldsContainer'
 import LoginContainer from './LoginContainer'
 import AuthenticationStore from '../stores/AuthenticationStore'
-//import MapContianer from './MapContainer'
 import DateFieldsContainer from './DateFieldsContainer'
 import CustomersContainer from './CustomersContainer'
 import CustomersLink from './CustomersLink'
@@ -21,7 +20,6 @@ import LogoContainer from './LogoContainer'
 import ViewContainer from './ViewContainer'
 
 class Application extends React.Component {
-
     render() {
         return (
             <div>
