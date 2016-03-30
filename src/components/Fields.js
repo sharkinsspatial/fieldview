@@ -19,10 +19,6 @@ var Fields = React.createClass({
         this.props.setActiveField(id)
     },
 
-    componentWillUnmount() {
-        this.props.clearActiveField()
-    },
-
     render() {
         let farmFieldItems = this.props.farmFields.map(item => {
             let active = ''

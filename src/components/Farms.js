@@ -8,10 +8,6 @@ var Farms = React.createClass({
         this.props.setActiveFarm(id)
     },
 
-    componentWillUnmount() {
-        this.props.setActiveFarm()
-    },
-
     render() {
         let farmItems = this.props.farms.map(item => {
             let active = ''
