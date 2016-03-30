@@ -142,7 +142,7 @@ class ImageStore {
         let compareProductBefore = this.getProductByType(beforeImage, type)
 
         let afterImage = this.state.fieldImages.find((image) => {
-            return image.id === this.state.compareProductAfter
+            return image.id === this.state.compareImageAfter
         })
         let compareProductAfter = this.getProductByType(afterImage, type)
 
