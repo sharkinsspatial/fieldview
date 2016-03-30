@@ -22,6 +22,7 @@ var MapCompare = React.createClass({
             </div>
         )
     },
+
     componentDidMount: function() {
         mapboxgl.accessToken = 'mapboxKey'
         window.mapboxgl = mapboxgl
@@ -110,12 +111,6 @@ var MapCompare = React.createClass({
         let nextCompareProductBefore = nextProps.ImageStore.compareProductBefore
         let compareProductAfter = this.props.ImageStore.compareProductAfter
         let nextCompareProductAfter = nextProps.ImageStore.compareProductAfter
-        //let product = this.props.ImageStore.activeProduct
-        //let productId = product ? product.id : null
-        //let nextProduct = nextProps.ImageStore.activeProduct
-        //let nextProductId = nextProduct ? nextProduct.id : null
-        //let dateFieldIds = this.props.ImageStore.dateFieldIds
-        //let nextDateFieldIds = nextProps.ImageStore.dateFieldIds
 
         if (fieldId !== nextFieldId) {
             this.removeImagery(this.before)
@@ -133,12 +128,7 @@ var MapCompare = React.createClass({
         if (!isequal(compareProductAfter, nextCompareProductAfter)) {
             this.addImagery(this.after, nextCompareProductAfter)
         }
-        //if (productId !== nextProductId) {
-            //this.addImagery(nextProduct)
-        //}
     }
-
-
 })
 
 export default MapCompare
