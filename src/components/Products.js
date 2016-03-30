@@ -12,7 +12,7 @@ var Products = React.createClass({
         let productItems = []
         if (this.props.ImageStore.activeImage) {
             productItems = this.props.ImageStore.activeImage
-                .products.map((item, index) => {
+                .products.map((item) => {
                     let active = item.id === this.props.ImageStore.activeProduct.id
                         ? 'active' : ''
                     return <ListGroupItem key={item.id}

@@ -99,6 +99,9 @@ module.exports = function(grunt) {
                 },
                 {
                     src: 'node_modules/babel-polyfill/dist/polyfill.min.js'
+                },
+                {
+                    src: 'node_modules/mapbox-gl-compare/dist/mapbox-gl-compare.css'
                 }
                 ]
             }

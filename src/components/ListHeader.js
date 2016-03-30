@@ -10,7 +10,7 @@ var ListHeader = React.createClass({
     render() {
         let headerClass = classNames({
             'text-center': true,
-            'hidden': this.props.listItems.length == 0 ? true : false
+            'hidden': this.props.listItems.length == 0
         })
         return (
             <h4 className={headerClass}>{this.props.text}</h4>

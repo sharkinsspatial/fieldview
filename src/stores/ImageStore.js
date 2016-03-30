@@ -7,9 +7,9 @@ import sortby from 'lodash.sortby'
 import pluck from 'lodash.pluck'
 import uniqby from 'lodash.uniqby'
 import reverse from 'lodash.reverse'
+import intersection from 'lodash.intersection'
 import AuthenticationStore from './AuthenticationStore'
 import AuthenticationActions from '../actions/AuthenticationActions'
-
 
 class ImageStore {
     constructor() {
@@ -29,9 +29,14 @@ class ImageStore {
                         this.onSetCurrentCustomer)
         this.bindAction(ImageActions.updateMapboxJSON, this.onUpdateMapboxJSON)
         this.bindAction(ImageActions.setMapView, this.onSetMapView)
+        this.bindAction(ImageActions.setMapCompareView, this.onSetMapCompareView)
+        this.bindAction(ImageActions.addCompareImage, this.onAddCompareImage)
+        this.bindAction(ImageActions.clearCompareImages, this.onClearCompareImages)
+        this.bindAction(ImageActions.setActiveProductType, this.onSetActiveProductType)
         this.state = { loading: false, dateImages: [], fieldImages: [],
             dates: [], dateFields: [], loadingDates: true, mapboxError: false,
-            slides: true, mapboxToken: 'mapboxKey', mapView: true}
+            slides: true, mapboxToken: 'mapboxKey', mapView: true,
+            compareProductTypes: [] }
     }
 
     loadFieldImages(items) {
@@ -63,6 +68,87 @@ class ImageStore {
             return image.id === id
         })
         this.setDefaultProduct(activeImage)
+    }
+
+    addCompareImageAfter(activeImage, compareProductTypes) {
+        let compareImageAfter = activeImage.id
+        let commonProductTypes = intersection(compareProductTypes,
+                                              this.state.compareProductTypes)
+        let activeProductType = commonProductTypes.includes(this.state
+                .activeProductType) ? this.state.activeProductType : null
+        let compareProductAfter = null
+        let compareProductBefore = this.state.compareProductBefore
+        if (activeProductType) {
+            compareProductAfter = this.getProductByType(activeImage,
+                                                        activeProductType)
+        } else {
+            compareProductAfter = null
+            compareProductBefore = null
+        }
+        this.setState({ compareImageAfter: compareImageAfter,
+                      compareProductTypes: commonProductTypes,
+                      activeProductType: activeProductType,
+                      compareProductBefore: compareProductBefore,
+                      compareProductAfter: compareProductAfter })
+    }
+
+    addCompareImageBefore(activeImage, compareProductTypes) {
+        let compareImageBefore = activeImage.id
+        let activeProductType = null
+        let compareProductBefore = null
+        if (activeImage.products) {
+            activeProductType = compareProductTypes[0]
+            compareProductBefore = this.getProductByType(activeImage,
+                                                         activeProductType)
+        }
+        this.setState({ compareImageBefore: compareImageBefore,
+                      compareProductTypes: compareProductTypes,
+                      activeProductType: activeProductType,
+                      compareProductBefore: compareProductBefore })
+    }
+
+    onAddCompareImage(id) {
+        let activeImage = this.state.fieldImages.find((image) => {
+            return image.id === id
+        })
+
+        let compareProductTypes = []
+        if (activeImage.products) {
+            compareProductTypes = activeImage.products.map((product) => {
+                return product.productType
+            })
+        }
+        if (this.state.compareImageBefore) {
+            this.addCompareImageAfter(activeImage, compareProductTypes)
+        } else {
+            this.addCompareImageBefore(activeImage, compareProductTypes)
+        }
+    }
+
+    getProductByType(image, type) {
+        let compareProduct = null
+        if (image && image.products) {
+            compareProduct = image.products.find((product) => {
+                return product.productType === type
+            })
+        }
+        return compareProduct
+    }
+
+    onSetActiveProductType(type) {
+        let beforeImage = this.state.fieldImages.find((image) => {
+            return image.id === this.state.compareImageBefore
+        })
+        let compareProductBefore = this.getProductByType(beforeImage, type)
+
+        let afterImage = this.state.fieldImages.find((image) => {
+            return image.id === this.state.compareProductAfter
+        })
+        let compareProductAfter = this.getProductByType(afterImage, type)
+
+        this.setState({ compareProductBefore: compareProductBefore,
+                      compareProductAfter: compareProductAfter,
+                    activeProductType: type })
     }
 
     onSetActiveProduct(id) {
@@ -115,12 +201,14 @@ class ImageStore {
                 this.setState({ fieldId: id, fieldImages: [], activeImage: null,
                               activeProduct: null, loading: true,
                               mapboxError: false})
+                this.onClearCompareImages()
                 this.getInstance().fetchFieldImages()
             }
         }
     }
 
     onSetActiveFarm() {
+        this.onClearCompareImages()
         this.setState({ fieldImages: [], activeImage: null,
                       activeProduct: null, loading: false, mapboxError: false })
     }
@@ -170,6 +258,12 @@ class ImageStore {
                         mapboxError: false })
     }
 
+    onClearCompareImages() {
+        this.setState({ compareImageAfter: null, compareImageBefore: null,
+                      compareProductTypes: [], activeProductType: null,
+                      compareProductBefore: null, compareProductAfter: null })
+    }
+
     onSendMapboxError() {
         this.setState({ mapboxError: true })
     }
@@ -186,6 +280,10 @@ class ImageStore {
 
     onSetMapView(bool) {
         this.setState({ mapView: bool })
+    }
+
+    onSetMapCompareView(bool) {
+        this.setState({ mapCompareView: bool })
     }
 }
 

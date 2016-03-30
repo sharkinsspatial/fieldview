@@ -18,6 +18,7 @@ import CustomersContainer from './CustomersContainer'
 import CustomersLink from './CustomersLink'
 import LogoContainer from './LogoContainer'
 import ViewContainer from './ViewContainer'
+import FieldsCompareContainer from './FieldsCompareContainer'
 
 class Application extends React.Component {
     render() {
@@ -38,6 +39,9 @@ class Application extends React.Component {
                     </LinkContainer>
                     <LinkContainer to='/fields'>
                         <NavItem eventKey={1}>Fields</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to='/fieldscompare'>
+                        <NavItem eventKey={1}>Compare</NavItem>
                     </LinkContainer>
                     <CustomersLink/>
                     </Nav>
@@ -72,6 +76,8 @@ ReactDOM.render((
             <Route path='dates' component={DateFieldsContainer}
                 onEnter={requireAuthorization}/>
             <Route path='fields' component={FieldsContainer}
+                onEnter={requireAuthorization}/>
+            <Route path='fieldscompare' component={FieldsCompareContainer}
                 onEnter={requireAuthorization}/>
             <Route path='customers' component={CustomersContainer}
                 onEnter={requireAuthorization}/>

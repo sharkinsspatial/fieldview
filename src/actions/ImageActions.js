@@ -7,7 +7,9 @@ class ImageActions {
                              'updateFieldImages', 'updateDateImages',
                              'clearActiveDate', 'imagesFailed',
                              'clearFieldImages', 'sendMapboxError',
-                             'updateMapboxJSON', 'setMapView')
+                             'updateMapboxJSON', 'setMapView',
+                             'addCompareImage', 'clearCompareImages',
+                             'setMapCompareView', 'setActiveProductType')
     }
 }
 
