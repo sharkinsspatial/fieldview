@@ -7,12 +7,28 @@ import ImageStore from '../src/stores/ImageStore'
 
 test('ImageStore', (t) => {
     let dateData = {data :
-        [{ id: 0, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 0, field: [{id: 0, name: 0, farm:{name: 0, id: 0}}]},
-        { id: 1, collectionDate: "2015-06-24T00:00:00.000Z",
-            fieldId: 1, products: [{id: 0}], field: [{id: 1, name: 1, farm:{name: 1, id: 1}}]},
-        { id: 2, collectionDate: "2015-05-25T00:00:00.000Z",
-            fieldId: 1, field: [{id: 1, name: 1, farm:{name: 1, id: 1}}]}
+        [{id: 0,
+            collectionDate: "2015-05-24T00:00:00.000Z",
+            fieldId: 0,
+            field: [{id: 0,
+                        name: 0,
+                        farm:{name: 0, id: 0}}]},
+        { id: 1,
+            collectionDate: "2015-06-24T00:00:00.000Z",
+            fieldId: 1,
+            products: [{id: 0,
+                        productType: 'CIR'}],
+            field: [{id: 1,
+                        name: 1,
+                        farm:{name: 1, id: 1}}]},
+        { id: 2,
+            collectionDate: "2015-05-25T00:00:00.000Z",
+            fieldId: 1,
+            products: [{id: 0,
+                        productType: 'CIR'}],
+            field: [{id: 1,
+                        name: 1,
+                        farm:{name: 1, id: 1}}]}
         ]}
 
     t.test('updateFieldImages', (t) => {
@@ -139,6 +155,39 @@ test('ImageStore', (t) => {
                 'Sorts date images by date')
         t.equal(ImageStore.getState().dates[2], dateData.data[0].collectionDate,
                 'Sorts date images by date')
+        t.end()
+    })
+
+    t.test('addCompareImage', (t) => {
+        let data = dateData
+        let action = ImageActions.updateFieldImages.id
+        alt.dispatcher.dispatch({action, data})
+
+        data = 1
+        action = ImageActions.addCompareImage.id
+        alt.dispatcher.dispatch({action, data})
+
+        t.equal(ImageStore.getState().compareImageBefore, 1)
+        t.deepEqual(ImageStore.getState().compareProductTypes, ['CIR'])
+        t.equal(ImageStore.getState().activeProductType, 'CIR')
+        t.deepEqual(ImageStore.getState().compareProductBefore,
+                    dateData.data[1].products[0])
+
+        data = 2
+        alt.dispatcher.dispatch({action, data})
+        t.equal(ImageStore.getState().compareImageAfter, 2)
+        t.deepEqual(ImageStore.getState().compareProductTypes, ['CIR'])
+        t.equal(ImageStore.getState().activeProductType, 'CIR')
+        t.deepEqual(ImageStore.getState().compareProductAfter,
+                    dateData.data[2].products[0])
+
+        data = 0
+        alt.dispatcher.dispatch({action, data})
+        t.equal(ImageStore.getState().compareImageAfter, 0)
+        t.deepEqual(ImageStore.getState().compareProductTypes.length, 0)
+        t.notOk(ImageStore.getState().activeProductType)
+        t.notOk(ImageStore.getState().compareProductBefore)
+        t.notOk(ImageStore.getState().compareProductAfter)
         t.end()
     })
 })
