@@ -17,7 +17,9 @@ test('ImageStore', (t) => {
             collectionDate: "2015-06-24T00:00:00.000Z",
             fieldId: 1,
             products: [{id: 0,
-                        productType: 'CIR'}],
+                        productType: 'CIR'},
+                       {id: 1,
+                        productType: 'NDVI'}],
             field: [{id: 1,
                         name: 1,
                         farm:{name: 1, id: 1}}]},
@@ -25,7 +27,9 @@ test('ImageStore', (t) => {
             collectionDate: "2015-05-25T00:00:00.000Z",
             fieldId: 1,
             products: [{id: 0,
-                        productType: 'CIR'}],
+                        productType: 'CIR'},
+                       {id: 1,
+                        productType: 'NDVI'}],
             field: [{id: 1,
                         name: 1,
                         farm:{name: 1, id: 1}}]}
@@ -168,7 +172,7 @@ test('ImageStore', (t) => {
         alt.dispatcher.dispatch({action, data})
 
         t.equal(ImageStore.getState().compareImageBefore, 1)
-        t.deepEqual(ImageStore.getState().compareProductTypes, ['CIR'])
+        t.deepEqual(ImageStore.getState().compareProductTypes, ['CIR', 'NDVI'])
         t.equal(ImageStore.getState().activeProductType, 'CIR')
         t.deepEqual(ImageStore.getState().compareProductBefore,
                     dateData.data[1].products[0])
@@ -176,7 +180,7 @@ test('ImageStore', (t) => {
         data = 2
         alt.dispatcher.dispatch({action, data})
         t.equal(ImageStore.getState().compareImageAfter, 2)
-        t.deepEqual(ImageStore.getState().compareProductTypes, ['CIR'])
+        t.deepEqual(ImageStore.getState().compareProductTypes, ['CIR', 'NDVI'])
         t.equal(ImageStore.getState().activeProductType, 'CIR')
         t.deepEqual(ImageStore.getState().compareProductAfter,
                     dateData.data[2].products[0])
@@ -188,6 +192,31 @@ test('ImageStore', (t) => {
         t.notOk(ImageStore.getState().activeProductType)
         t.notOk(ImageStore.getState().compareProductBefore)
         t.notOk(ImageStore.getState().compareProductAfter)
+        t.end()
+    })
+
+    t.test('setActiveProductType', (t) => {
+        let data = dateData
+        let action = ImageActions.updateFieldImages.id
+        alt.dispatcher.dispatch({action, data})
+
+        data = 1
+        action = ImageActions.addCompareImage.id
+        alt.dispatcher.dispatch({action, data})
+
+        data = 'NDVI'
+        action = ImageActions.setActiveProductType.id
+        alt.dispatcher.dispatch({action, data})
+
+        t.deepEqual(ImageStore.getState().compareProductBefore,
+                    dateData.data[1].products[1])
+
+        data = 2
+        action = ImageActions.addCompareImage.id
+        alt.dispatcher.dispatch({action, data})
+
+        t.deepEqual(ImageStore.getState().compareProductAfter,
+                    dateData.data[2].products[1])
         t.end()
     })
 })
