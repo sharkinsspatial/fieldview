@@ -18,9 +18,6 @@ test('Farms', (t) => {
             'Farms will render a button for each item in the farms prop')
     t.equal(setActiveFarm.firstCall.args[0], farms[0].id,
             'Clicking a farm button will call setActiveFarm with the id value')
-    component.componentWillUnmount()
-    t.equal(setActiveFarm.secondCall.args[0], undefined,
-            'setActiveFarm is called with an undefined value when unmounting')
     t.end()
 })
 
