@@ -44,7 +44,9 @@ var MapCompare = React.createClass({
             zoom: zoom,
             maxZoom: maxZoom
         })
-
+        if (this.props.FieldStore.activeField) {
+            this.fitBounds(this.props.FieldStore.activeField.bounds, true)
+        }
         this.manageEvents(this.before)
         this.manageEvents(this.after)
         new Compare(this.before, this.after)
@@ -62,11 +64,6 @@ var MapCompare = React.createClass({
     },
 
     renderCurrentProps() {
-        let activeField = this.props.FieldStore.activeField
-        if (activeField) {
-            this.before.fitBounds(activeField.bounds, {padding: 100})
-            this.after.fitBounds(activeField.bounds, {padding: 100})
-        }
         let productBefore = this.props.ImageStore.compareProductBefore
         if (productBefore) {
             this.addImagery(this.before, productBefore)
@@ -102,6 +99,15 @@ var MapCompare = React.createClass({
         }
     },
 
+    fitBounds(bounds, initial) {
+        let options = {padding: 100}
+        if (initial) {
+            options.duration = 0
+        }
+        this.before.fitBounds(bounds, options)
+        this.after.fitBounds(bounds, options)
+    },
+
     componentWillReceiveProps(nextProps) {
         let field = this.props.FieldStore.activeField
         let fieldId = field ? field.id : null
@@ -116,8 +122,7 @@ var MapCompare = React.createClass({
             this.removeImagery(this.before)
             this.removeImagery(this.after)
             if (nextField) {
-                this.before.fitBounds(nextField.bounds, {padding: 100})
-                this.after.fitBounds(nextField.bounds, {padding: 100})
+                this.fitBounds(nextField.bounds, false)
             }
         }
 

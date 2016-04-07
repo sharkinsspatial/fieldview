@@ -31,6 +31,9 @@ var Map = React.createClass({
             zoom: 12,
             maxZoom: 17// starting zoom
         })
+        if (this.props.FieldStore.activeField) {
+            this.fitBounds(this.props.FieldStore.activeField.bounds, true)
+        }
         let map = this.map
         map.addControl(new mapboxgl.Navigation())
         this.addSelectFieldControl()
@@ -76,11 +79,6 @@ var Map = React.createClass({
     },
 
     renderCurrentProps() {
-        let activeField = this.props.FieldStore.activeField
-        if (activeField) {
-            this.map.fitBounds(activeField.bounds, {padding: 100})
-        }
-
         let activeProduct = this.props.ImageStore.activeProduct
         if (activeProduct) {
             this.addImagery(activeProduct)
@@ -126,6 +124,14 @@ var Map = React.createClass({
         }
     },
 
+    fitBounds(bounds, initial) {
+        let options = {padding: 100}
+        if (initial) {
+            options.duration = 0
+        }
+        this.map.fitBounds(bounds, options)
+    },
+
     componentWillReceiveProps(nextProps) {
         let field = this.props.FieldStore.activeField
         let fieldId = field ? field.id : null
@@ -141,7 +147,7 @@ var Map = React.createClass({
         if (fieldId !== nextFieldId) {
             this.removeImagery()
             if (nextField) {
-                this.map.fitBounds(nextField.bounds, {padding: 100})
+                this.fitBounds(nextField.bounds, false)
             }
         }
         if (productId !== nextProductId) {
