@@ -71,7 +71,16 @@ test('ImageStore', (t) => {
     })
 
     t.test('setActiveDate', (t) => {
-        let data = dateData
+        let noFieldImage = { id: 3,
+            collectionDate: "2015-05-25T00:00:00.000Z",
+            fieldId: 80,
+            products: [{id: 0,
+                        productType: 'CIR'},
+                       {id: 1,
+                        productType: 'NDVI'}],
+            field: []
+        }
+        let data = {data: dateData.data.concat(noFieldImage)}
         let action = ImageActions.updateDateImages.id
         alt.dispatcher.dispatch({action, data})
 
@@ -97,8 +106,10 @@ test('ImageStore', (t) => {
             fieldId: 2, field: [{id: 2, name: 'a', farm: {name: 'bfarm', id: 2}}]},
             { id: 0, collectionDate: "2015-05-24T00:00:00.000Z",
             fieldId: 0, field: [{id: 0, name: 'a', farm: {name: 'afarm', id: 1}}]},
-                { id: 1, collectionDate: "2015-05-24T00:00:00.000Z",
-            fieldId: 1, field: [{id: 1, name: 'b', farm: {name: 'afarm', id: 1}}]}
+            { id: 1, collectionDate: "2015-05-24T00:00:00.000Z",
+            fieldId: 1, field: [{id: 1, name: 'b', farm: {name: 'afarm', id: 1}}]},
+            { id: 4, collectionDate: "2015-05-24T00:00:00.000Z",
+            fieldId: 4, field: [{id: 4, name: 'b', farm: null}]}
         ]}
 
         action = ImageActions.updateDateImages.id
@@ -107,7 +118,7 @@ test('ImageStore', (t) => {
         action = ImageActions.setActiveDate.id
         data = '2015-05-24T00:00:00.000Z'
         alt.dispatcher.dispatch({action, data})
-
+        console.log(ImageStore.getState().dateFields)
         t.equal(ImageStore.getState().dateFields[0].id, 0,
                'Sorts dateFields by name and nested farm name')
         t.equal(ImageStore.getState().dateFields[1].id, 1,

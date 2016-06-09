@@ -230,15 +230,16 @@ class ImageStore {
     }
 
     onSetActiveDate(date) {
-        let sameDates = this.state.dateImages.filter((image) => {
-            return image.collectionDate === date
-        })
-
-        let dateFields = sameDates.map((image) => {
-            return image.field[0]
-        })
+        let dateFields = this.state.dateImages.reduce((memo, image) => {
+            if (image.field[0] && image.collectionDate === date) {
+                memo.push(image.field[0])
+            }
+            return memo
+        }, [])
         let sortedDateFields = sortby(sortby(dateFields, 'name'), (field) => {
-            return field.farm.name
+            if (field.farm) {
+                return field.farm.name
+            }
         })
         let dateFieldIds = dateFields.map((item) => {
             return item.id
