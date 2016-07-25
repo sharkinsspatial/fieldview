@@ -29,7 +29,7 @@ var Map = React.createClass({
             center: [-119.76975111490768,
               45.7758644387534], // starting position
             zoom: 12,
-            maxZoom: 17// starting zoom
+            maxZoom: 18// starting zoom
         })
         if (this.props.FieldStore.activeField) {
             this.fitBounds(this.props.FieldStore.activeField.bounds, true)
@@ -60,12 +60,10 @@ var Map = React.createClass({
             this.map.once('mousedown', (event) => {
                 button.classList.remove('active')
                 this.map.getCanvas().style.cursor = ''
-                this.map.featuresAt(event.point, { radius: 5 },
-                    (err, features) => {
-                        if (features.length > 0) {
-                            this.selectField(features[0].properties.id)
-                        }
-                    })
+                let features = this.map.queryRenderedFeatures(event.point)
+                if (features.length > 0) {
+                    this.selectField(features[0].properties.id)
+                }
             })
         })
         controlGroup.appendChild(button)
@@ -94,7 +92,7 @@ var Map = React.createClass({
             this.map.addSource('imagery', {
                 "type": "raster",
                 "url": `mapbox://infraredbaron.${product.id}`,
-                    "tileSize": 256
+                "tileSize": 512
             });
             this.map.addLayer({
                 "id": "imagery",
