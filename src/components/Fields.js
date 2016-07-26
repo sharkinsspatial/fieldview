@@ -1,7 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
+import scrollTo from './ScrollTo'
 
 var Fields = React.createClass({
     componentWillMount() {
@@ -39,15 +39,11 @@ var Fields = React.createClass({
     },
 
     componentDidMount() {
-        this.makeActiveItemVisible()
+        scrollTo(this.refs.active)
     },
 
-    makeActiveItemVisible() {
-        let activeItemComponent = this.refs.active
-        if (activeItemComponent) {
-            let domNode = ReactDOM.findDOMNode(activeItemComponent)
-            domNode.scrollIntoView()
-        }
+    componentDidUpdate() {
+        scrollTo(this.refs.active)
     }
 })
 

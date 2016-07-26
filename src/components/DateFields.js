@@ -1,6 +1,7 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
+import scrollTo from './ScrollTo'
 
 var DateFields = React.createClass({
     componentWillMount() {
@@ -32,7 +33,7 @@ var DateFields = React.createClass({
             let farmName = item.farm ? item.farm.name : 'None'
             return <ListGroupItem key={item.id}
                 onClick={this.handleFieldChange.bind(this, item)}
-                active={active}>{item.name + ' - ' + farmName}
+                active={active} ref={active}>{item.name + ' - ' + farmName}
                 </ListGroupItem>
         })
 
@@ -41,6 +42,14 @@ var DateFields = React.createClass({
                 {fieldItems}
             </ListGroup>
         )
+    },
+
+    componentDidMount() {
+        scrollTo(this.refs.active)
+    },
+
+    componentDidUpdate() {
+        scrollTo(this.refs.active)
     }
 })
 
