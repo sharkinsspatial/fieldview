@@ -29,7 +29,7 @@ class FieldStore {
     onUpdate(response) {
         let farms = this.load(response.data)
         let fields = sortby(response.data, 'name')
-        this.setState({ fields: fields, loading: false, farms: farms, farmFields: [] })
+        this.setState({ fields, loading: false, farms, farmFields: [] })
     }
 
     onSetActiveField(id) {
@@ -45,8 +45,8 @@ class FieldStore {
                     return false
                 }
             })
-            this.setState({ activeField: activeField, unauthorizedField: false,
-                activeFarm: activeField.farm.id, farmFields: farmFields })
+            this.setState({ activeField, unauthorizedField: false,
+                activeFarm: activeField.farm.id, farmFields })
         }
         else {
             this.setState({ activeField: null, unauthorizedField: true})
@@ -68,7 +68,7 @@ class FieldStore {
         let farmFields = this.state.fields.filter((field) => {
             return field.farm.id === id
         })
-        this.setState({ farmFields: farmFields, activeFarm: id,
+        this.setState({ farmFields, activeFarm: id,
                       activeField: null })
     }
 

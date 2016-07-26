@@ -85,11 +85,9 @@ class ImageStore {
             compareProductAfter = null
             compareProductBefore = null
         }
-        this.setState({ compareImageAfter: compareImageAfter,
-                      compareProductTypes: commonProductTypes,
-                      activeProductType: activeProductType,
-                      compareProductBefore: compareProductBefore,
-                      compareProductAfter: compareProductAfter })
+        this.setState({ compareImageAfter, compareProductTypes,
+                      activeProductType, compareProductBefore,
+                      compareProductAfter })
     }
 
     addCompareImageBefore(activeImage, compareProductTypes) {
@@ -101,10 +99,8 @@ class ImageStore {
             compareProductBefore = this.getProductByType(activeImage,
                                                          activeProductType)
         }
-        this.setState({ compareImageBefore: compareImageBefore,
-                      compareProductTypes: compareProductTypes,
-                      activeProductType: activeProductType,
-                      compareProductBefore: compareProductBefore })
+        this.setState({ compareImageBefore, compareProductTypes,
+                      activeProductType, compareProductBefore })
     }
 
     onAddCompareImage(id) {
@@ -135,27 +131,28 @@ class ImageStore {
         return compareProduct
     }
 
-    onSetActiveProductType(type) {
+    onSetActiveProductType(activeProductType) {
         let beforeImage = this.state.fieldImages.find((image) => {
             return image.id === this.state.compareImageBefore
         })
-        let compareProductBefore = this.getProductByType(beforeImage, type)
+        let compareProductBefore = this.getProductByType(beforeImage,
+                                                         activeProductType)
 
         let afterImage = this.state.fieldImages.find((image) => {
             return image.id === this.state.compareImageAfter
         })
-        let compareProductAfter = this.getProductByType(afterImage, type)
+        let compareProductAfter = this.getProductByType(afterImage,
+                                                        activeProductType)
 
-        this.setState({ compareProductBefore: compareProductBefore,
-                      compareProductAfter: compareProductAfter,
-                    activeProductType: type })
+        this.setState({ compareProductBefore, compareProductAfter,
+                    activeProductType })
     }
 
     onSetActiveProduct(id) {
         let activeProduct = this.state.activeImage.products.filter(item => {
             return id === item.id
         })[0]
-        this.setState({ activeProduct: activeProduct, mapboxError: false })
+        this.setState({ activeProduct, mapboxError: false })
         if (this.state.slides && activeProduct) {
             this.getInstance().fetchMapboxJSON()
         }
@@ -172,9 +169,8 @@ class ImageStore {
                 activeProduct = null
                 mapboxError = true
             }
-            this.setState({ activeImage: activeImage,
-                          activeProduct: activeProduct,
-                        mapboxError: mapboxError, mapboxJSON: null })
+            this.setState({ activeImage, activeProduct, mapboxError,
+                          mapboxJSON: null })
             if (this.state.slides && activeProduct) {
                 this.getInstance().fetchMapboxJSON()
             }

@@ -27,12 +27,12 @@ class AuthenticationStore {
         if (response.data.customers.length > 1) {
             customers = response.data.customers
         }
-        this.setState({ token: response.data.id, customerId: customerId,
-            customers: customers, logo: response.data.logo })
+        this.setState({ token: response.data.id, customerId, customers,
+                      logo: response.data.logo })
     }
 
     onFetchToken(credentials) {
-        this.setState({ credentials: credentials })
+        this.setState({ credentials })
         this.getInstance().fetchToken()
     }
 
