@@ -36,6 +36,7 @@ var Map = React.createClass({
         }
         let map = this.map
         map.addControl(new mapboxgl.Navigation())
+        map.addControl(new mapboxgl.Geolocate());
         this.addSelectFieldControl()
         map.off('source.error', map.onError);
         map.off('tile.error', map.onError);
