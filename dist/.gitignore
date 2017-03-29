@@ -1,0 +1,4 @@
+# Ignore all the build files.
+*
+# But not these unbuilt files.
+!.gitignore
