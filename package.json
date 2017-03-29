@@ -24,6 +24,7 @@
     "babel-polyfill": "^6.0.16",
     "classnames": "^2.2.3",
     "geo-viewport": "^0.1.1",
+    "history": "^1.17.0",
     "lodash.intersection": "^4.1.2",
     "lodash.isequal": "^4.0.0",
     "lodash.pluck": "^3.1.2",
@@ -37,8 +38,8 @@
     "react-bootstrap": "^0.28.3",
     "react-dimensions": "^1.0.2",
     "react-dom": "^0.14.2",
-    "react-router": "^1.0.0-rc1",
-    "react-router-bootstrap": "^0.19.2",
+    "react-router": "^1.0.3",
+    "react-router-bootstrap": "^0.19.3",
     "scroll-into-view-if-needed": "^1.0.2"
   },
   "devDependencies": {
