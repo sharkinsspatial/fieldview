@@ -13,6 +13,7 @@ var ProductsCompare = React.createClass({
             let active = item === this.props.ImageStore.activeProductType
                 ? 'active' : ''
             return <ListGroupItem key={item}
+                    className='btn-block'
                     onClick={this.handleProductChange.bind(this, item)}
                     active={active}>{item}</ListGroupItem>
         })

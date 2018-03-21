@@ -25,6 +25,7 @@ var ImagesCompare = React.createClass({
             let active = item.id === this.props.ImageStore.compareImageBefore ||
                 item.id === this.props.ImageStore.compareImageAfter ? 'active' : ''
             return <ListGroupItem key={item.id}
+                    className='btn-block'
                     onClick={this.handleImageChange.bind(this, item)}
                     active={active}>{formatDate}</ListGroupItem>
         })

@@ -27,6 +27,7 @@ var Fields = React.createClass({
                     ? 'active' : ''
             }
             return <ListGroupItem key={item.id}
+                className='btn-block'
                 onClick={this.handleFieldChange.bind(this, item.id)}
                 active={active} ref={active}>{item.name}</ListGroupItem>
         })

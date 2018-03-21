@@ -15,7 +15,7 @@ var Products = React.createClass({
                 .products.map((item) => {
                     let active = item.id === this.props.ImageStore.activeProduct.id
                         ? 'active' : ''
-                    return <ListGroupItem key={item.id}
+                    return <ListGroupItem key={item.id} className='btn-block'
                     onClick={this.handleProductChange.bind(this, item)}
                     active={active}>{item.productType}</ListGroupItem>
                 })

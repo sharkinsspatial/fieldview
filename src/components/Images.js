@@ -22,6 +22,7 @@ var Images = React.createClass({
                 active = item.id === this.props.ImageStore.activeImage.id ? 'active' : ''
             }
             return <ListGroupItem key={item.id}
+                    className='btn-block'
                     onClick={this.handleImageChange.bind(this, item)}
                     active={active}>{formatDate}</ListGroupItem>
         })

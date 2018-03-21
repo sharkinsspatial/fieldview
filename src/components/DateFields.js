@@ -32,6 +32,7 @@ var DateFields = React.createClass({
             }
             let farmName = item.farm ? item.farm.name : 'None'
             return <ListGroupItem key={item.id}
+                className='btn-block'
                 onClick={this.handleFieldChange.bind(this, item)}
                 active={active} ref={active}>{item.name + ' - ' + farmName}
                 </ListGroupItem>

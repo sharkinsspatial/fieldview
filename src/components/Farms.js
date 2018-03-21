@@ -16,6 +16,7 @@ var Farms = React.createClass({
                     ? 'active' : ''
             }
             return <ListGroupItem key={item.id}
+                className='btn-block'
                 onClick={this.handleFarmChange.bind(this, item.id)}
                 active={active}>{item.name}</ListGroupItem>
         })

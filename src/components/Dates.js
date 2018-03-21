@@ -29,6 +29,7 @@ var Dates = React.createClass({
                     ? 'active' : ''
             }
             return <ListGroupItem key={item}
+                className='btn-block'
                 onClick={this.handleDateChange.bind(this, item)}
                 active={active}>{formatDate}</ListGroupItem>
         })
